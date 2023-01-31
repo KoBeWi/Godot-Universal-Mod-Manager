@@ -1,0 +1,132 @@
+[gd_scene load_steps=3 format=3 uid="uid://csotwr1d3ubkw"]
+
+[ext_resource type="Script" path="res://Scenes/Game.gd" id="1_a8a8g"]
+[ext_resource type="Texture2D" uid="uid://s0pfm6agi7gy" path="res://Textures/Add.svg" id="1_vji8i"]
+
+[node name="Game" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a8a8g")
+metadata/_edit_lock_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+
+[node name="GameTitle" type="Label" parent="HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Game Title"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Mods Enabled"
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Mod List"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Add Mod"
+icon = ExtResource("1_vji8i")
+expand_icon = true
+
+[node name="Button2" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Create Mod"
+icon = ExtResource("1_vji8i")
+expand_icon = true
+
+[node name="NewModDialog1" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Open a Directory"
+position = Vector2i(-800, 0)
+size = Vector2i(600, 400)
+min_size = Vector2i(600, 400)
+ok_button_text = "Wybierz bieżący katalog"
+file_mode = 2
+access = 2
+
+[node name="NewModDialog2" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+title = "Create Mod"
+position = Vector2i(-800, 600)
+size = Vector2i(600, 200)
+min_size = Vector2i(600, 200)
+
+[node name="GridContainer" type="GridContainer" parent="NewModDialog2"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 592.0
+offset_bottom = 151.0
+theme_override_constants/h_separation = 30
+columns = 2
+
+[node name="Label" type="Label" parent="NewModDialog2/GridContainer"]
+layout_mode = 2
+text = "Name"
+
+[node name="NewModName" type="LineEdit" parent="NewModDialog2/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="NewModDialog2/GridContainer"]
+layout_mode = 2
+text = "Description"
+
+[node name="NewModDescription" type="TextEdit" parent="NewModDialog2/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="NewModDialog2/GridContainer"]
+layout_mode = 2
+text = "Version"
+
+[node name="NewModeVersion" type="LineEdit" parent="NewModDialog2/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="VBoxContainer/Button2" to="." method="create_mod"]
+[connection signal="dir_selected" from="NewModDialog1" to="." method="new_mod_dir_selected"]
+[connection signal="confirmed" from="NewModDialog2" to="." method="create_mod_confirmed"]

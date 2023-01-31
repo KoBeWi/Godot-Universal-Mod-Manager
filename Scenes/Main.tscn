@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://jykr2g2kil0d"]
+
+[ext_resource type="Texture2D" uid="uid://s0pfm6agi7gy" path="res://Textures/Add.svg" id="1_ypae8"]
+
+[node name="Main" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+metadata/_edit_vertical_guides_ = []
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Game List"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Import Game"
+icon = ExtResource("1_ypae8")
+expand_icon = true
+
+[node name="Button2" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Add Game"
+icon = ExtResource("1_ypae8")
+expand_icon = true

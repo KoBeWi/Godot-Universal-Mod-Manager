@@ -1,0 +1,19 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Godot Universal Mod Manager"
+run/main_scene="res://Scenes/Main.tscn"
+config/features=PackedStringArray("4.0")
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0.211765, 0.239216, 0.321569, 1)
