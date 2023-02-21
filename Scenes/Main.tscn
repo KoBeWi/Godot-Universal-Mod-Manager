@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://jykr2g2kil0d"]
+[gd_scene load_steps=4 format=3 uid="uid://jykr2g2kil0d"]
 
+[ext_resource type="Script" path="res://Scenes/Main.gd" id="1_tstig"]
 [ext_resource type="Texture2D" uid="uid://s0pfm6agi7gy" path="res://Textures/Add.svg" id="1_ypae8"]
+[ext_resource type="Texture2D" uid="uid://cgdl6ls80n328" path="res://Textures/Folder.svg" id="3_76pst"]
 
 [node name="Main" type="VBoxContainer"]
 anchors_preset = 15
@@ -9,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
+script = ExtResource("1_tstig")
 metadata/_edit_vertical_guides_ = []
 metadata/_edit_lock_ = true
 
@@ -26,7 +29,7 @@ size_flags_horizontal = 4
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-text = "Import Game"
+text = "Add Game"
 icon = ExtResource("1_ypae8")
 expand_icon = true
 
@@ -34,6 +37,92 @@ expand_icon = true
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-text = "Add Game"
+text = "Create Game Entry"
 icon = ExtResource("1_ypae8")
 expand_icon = true
+
+[node name="CreateGame" type="AcceptDialog" parent="."]
+title = "Add New Game"
+size = Vector2i(616, 357)
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CreateGame"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 608.0
+offset_bottom = 308.0
+
+[node name="VBoxContainer" type="GridContainer" parent="CreateGame/VBoxContainer2"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Game Title"
+
+[node name="CreateTitle" type="LineEdit" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Godot Version"
+
+[node name="CreateVersion" type="OptionButton" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+item_count = 3
+selected = 2
+popup/item_0/text = "2.x"
+popup/item_0/id = 0
+popup/item_1/text = "3.x"
+popup/item_1/id = 1
+popup/item_2/text = "4.x"
+popup/item_2/id = 2
+
+[node name="Label3" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Main Scene"
+
+[node name="CreateScene" type="LineEdit" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label4" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Main Directory Path"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="CreateDirectory" type="LineEdit" parent="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("3_76pst")
+
+[node name="CreateError" type="Label" parent="CreateGame/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+horizontal_alignment = 1
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a Directory"
+ok_button_text = "Wybierz bieżący katalog"
+file_mode = 2
+access = 2
+
+[connection signal="pressed" from="VBoxContainer/Button2" to="." method="on_create_game_entry"]
+[connection signal="confirmed" from="CreateGame" to="." method="create_game_entry"]
+[connection signal="text_changed" from="CreateGame/VBoxContainer2/VBoxContainer/CreateTitle" to="." method="validate_create" unbinds=1]
+[connection signal="text_changed" from="CreateGame/VBoxContainer2/VBoxContainer/CreateScene" to="." method="validate_create" unbinds=1]
+[connection signal="text_changed" from="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer/CreateDirectory" to="." method="validate_create" unbinds=1]
+[connection signal="pressed" from="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer/Button" to="." method="create_pick_directory"]
+[connection signal="dir_selected" from="FileDialog" to="." method="on_directory_selected"]
