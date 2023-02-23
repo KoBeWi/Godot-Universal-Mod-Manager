@@ -25,6 +25,10 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 
+[node name="GameList" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="Button" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
@@ -64,6 +68,22 @@ text = "Game Title"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Label5" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Icon"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="CreateIcon" type="LineEdit" parent="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+icon = ExtResource("3_76pst")
 
 [node name="Label2" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
@@ -112,6 +132,7 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a Directory"
@@ -122,7 +143,10 @@ access = 2
 [connection signal="pressed" from="VBoxContainer/Button2" to="." method="on_create_game_entry"]
 [connection signal="confirmed" from="CreateGame" to="." method="create_game_entry"]
 [connection signal="text_changed" from="CreateGame/VBoxContainer2/VBoxContainer/CreateTitle" to="." method="validate_create" unbinds=1]
+[connection signal="text_changed" from="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer2/CreateIcon" to="." method="validate_create" unbinds=1]
+[connection signal="pressed" from="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer2/Button" to="." method="create_pick_icon"]
 [connection signal="text_changed" from="CreateGame/VBoxContainer2/VBoxContainer/CreateScene" to="." method="validate_create" unbinds=1]
 [connection signal="text_changed" from="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer/CreateDirectory" to="." method="validate_create" unbinds=1]
 [connection signal="pressed" from="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer/Button" to="." method="create_pick_directory"]
 [connection signal="dir_selected" from="FileDialog" to="." method="on_directory_selected"]
+[connection signal="file_selected" from="FileDialog" to="." method="on_file_selected"]

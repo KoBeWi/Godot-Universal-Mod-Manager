@@ -1,8 +1,3 @@
-do każdej gry plik CFG
-- nazwa
-- wersja godot
-- scena główna
-
 override.cfg zależne od wersji
 każdy mod z cfg z nazwą, pliki używają względnych ścieżek
 może nie przechowywać modów w plikach gry? tylko injectować ścieżkę do zewnętrznej listy

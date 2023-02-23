@@ -4,6 +4,7 @@ var game: String
 var name: String
 var description: String
 var version: String
+var dependencies: PackedStringArray
 
 func load_data(path: String):
 	pass

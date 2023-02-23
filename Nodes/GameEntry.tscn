@@ -1,21 +1,32 @@
-[gd_scene format=3 uid="uid://cby1pndqgyn3p"]
+[gd_scene load_steps=2 format=3 uid="uid://cby1pndqgyn3p"]
+
+[ext_resource type="Script" path="res://Nodes/GameEntry.gd" id="1_t476h"]
 
 [node name="GameEntry" type="PanelContainer"]
 custom_minimum_size = Vector2(600, 0)
 offset_bottom = 96.0
+script = ExtResource("1_t476h")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
 custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer/CenterContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Title"
