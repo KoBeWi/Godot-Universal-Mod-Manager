@@ -1,0 +1,10 @@
+[gd_scene format=2]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+margin_left = 118.048
+margin_top = 84.4453
+margin_right = 158.048
+margin_bottom = 98.4453
+text = "witam"

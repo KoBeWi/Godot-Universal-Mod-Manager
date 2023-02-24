@@ -1,23 +1,13 @@
 extends VBoxContainer
 
-const GAME_ENTRIES_FILE = "user://game_list.txt"
-
 enum {DIRECTORY_CREATE_GAME, DIRECTORY_ADD_GAME, DIRECTORY_ADD_DESCRIPTIOR}
 var directory_mode: int = -1
 
 var icon_formats := ["png", "jpg"]
 
-var games: Array
-
 func _ready() -> void:
-	var game_entries := FileAccess.open(GAME_ENTRIES_FILE, FileAccess.READ)
-	if game_entries:
-		games = str_to_var(game_entries.get_as_text())
-	
-	for game in games:
-		var entry = preload("res://Nodes/GameEntry.tscn").instantiate()
-		%GameList.add_child(entry)
-		entry.set_game(game.entry_path)
+	for game in Registry.games:
+		add_game_entry(game)
 
 func on_create_game_entry() -> void:
 	%CreateTitle.clear()
@@ -88,17 +78,24 @@ func create_game_entry() -> void:
 	entry.godot_version = %CreateVersion.get_item_text(%CreateVersion.selected)
 	entry.main_scene = %CreateScene.text
 	
-	var game_path: String = "user://Games/" + %CreateTitle.text.validate_filename()
-	DirAccess.make_dir_recursive_absolute(game_path)
-	entry.save_data(game_path)
+	var entry_path: String = "user://Games/" + %CreateTitle.text.validate_filename()
+	DirAccess.make_dir_recursive_absolute(entry_path)
+	entry.save_data(entry_path)
 	
 	if not %CreateIcon.text.is_empty():
-		DirAccess.copy_absolute(%CreateIcon.text, game_path.path_join("icon." + %CreateIcon.text.get_extension()))
+		DirAccess.copy_absolute(%CreateIcon.text, entry_path.path_join("icon." + %CreateIcon.text.get_extension()))
 	
-	add_game_entry(game_path, %CreateDirectory.text)
+	var entry_data := {entry_path = entry_path, game_path = %CreateDirectory.text}
+	Registry.games.append(entry_data)
+	Registry.save_game_entry_list()
+	add_game_entry(entry_data)
 
-func add_game_entry(entry_path: String, game_path: String):
-	games.append({entry_path = entry_path, game_path = game_path})
-	
-	var game_entries := FileAccess.open(GAME_ENTRIES_FILE, FileAccess.WRITE)
-	game_entries.store_string(var_to_str(games))
+func add_game_entry(game: Dictionary):
+	var entry = preload("res://Nodes/GameEntry.tscn").instantiate()
+	%GameList.add_child(entry)
+	entry.set_game(game.entry_path)
+	entry.button.pressed.connect(open_game.bind(game.entry_path))
+
+func open_game(path: String):
+	get_tree().set_meta(&"current_game", path)
+	get_tree().change_scene_to_file("res://Scenes/Game.tscn")

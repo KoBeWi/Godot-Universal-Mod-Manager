@@ -13,6 +13,15 @@ config_version=5
 config/name="Godot Universal Mod Manager"
 run/main_scene="res://Scenes/Main.tscn"
 config/features=PackedStringArray("4.0")
+run/low_processor_mode=true
+
+[autoload]
+
+Registry="*res://Data/Registry.gd"
+
+[debug]
+
+gdscript/warnings/enable=false
 
 [display]
 

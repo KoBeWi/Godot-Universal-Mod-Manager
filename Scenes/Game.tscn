@@ -19,9 +19,12 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/HBoxContainer"]
+[node name="GameIcon" type="TextureRect" parent="HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="GameTitle" type="Label" parent="HBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
@@ -29,9 +32,22 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Game Title"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer"]
+[node name="HBoxContainer2" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 8
+text = "Open Game Directory"
+
+[node name="GodotVersion" type="Label" parent="HBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Godot %s"
 
 [node name="HSeparator" type="HSeparator" parent="."]
 layout_mode = 2
@@ -40,7 +56,8 @@ layout_mode = 2
 layout_mode = 2
 alignment = 1
 
-[node name="CheckButton" type="CheckButton" parent="HBoxContainer2"]
+[node name="ModsEnabled" type="CheckButton" parent="HBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Mods Enabled"
@@ -127,6 +144,8 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
+[connection signal="pressed" from="HBoxContainer/HBoxContainer2/Button" to="." method="open_game_directory"]
+[connection signal="toggled" from="HBoxContainer2/ModsEnabled" to="." method="toggle_mods"]
 [connection signal="pressed" from="VBoxContainer/Button2" to="." method="create_mod"]
 [connection signal="dir_selected" from="NewModDialog1" to="." method="new_mod_dir_selected"]
 [connection signal="confirmed" from="NewModDialog2" to="." method="create_mod_confirmed"]
