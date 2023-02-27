@@ -55,22 +55,21 @@ func set_create_error(error: String):
 	$CreateGame.get_ok_button().disabled = not error.is_empty()
 
 func create_pick_icon() -> void:
-	## zbugowane
-	$FileDialog.mode = FileDialog.FILE_MODE_OPEN_FILE
+	$FileDialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 	$FileDialog.popup_centered_ratio(0.4)
 
 func create_pick_directory() -> void:
 	directory_mode = DIRECTORY_CREATE_GAME
-	$FileDialog.mode = FileDialog.FILE_MODE_OPEN_DIR
+	$FileDialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
 	$FileDialog.popup_centered_ratio(0.4)
 
 func on_directory_selected(dir: String) -> void:
 	match directory_mode:
 		DIRECTORY_CREATE_GAME:
-			%CreateDirectory.text = dir
+			set_text(%CreateDirectory, dir)
 
 func on_file_selected(path: String) -> void:
-	%CreateIcon.text = path
+	set_text(%CreateIcon, path)
 
 func create_game_entry() -> void:
 	var entry := preload("res://Data/GameDescriptor.gd").new()
@@ -83,7 +82,9 @@ func create_game_entry() -> void:
 	entry.save_data(entry_path)
 	
 	if not %CreateIcon.text.is_empty():
-		DirAccess.copy_absolute(%CreateIcon.text, entry_path.path_join("icon." + %CreateIcon.text.get_extension()))
+		var image := Image.load_from_file(%CreateIcon.text)
+		image.resize(80, 80, Image.INTERPOLATE_LANCZOS)
+		image.save_png(entry_path.path_join("icon.png"))
 	
 	var entry_data := {entry_path = entry_path, game_path = %CreateDirectory.text}
 	Registry.games.append(entry_data)
@@ -99,3 +100,7 @@ func add_game_entry(game: Dictionary):
 func open_game(path: String):
 	get_tree().set_meta(&"current_game", path)
 	get_tree().change_scene_to_file("res://Scenes/Game.tscn")
+
+func set_text(edit: LineEdit, text: String):
+	edit.text = text
+	edit.text_changed.emit(text)

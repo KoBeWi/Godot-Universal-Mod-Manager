@@ -136,7 +136,9 @@ autowrap_mode = 2
 
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a Directory"
-ok_button_text = "Wybierz bieżący katalog"
+size = Vector2i(452, 162)
+exclusive = false
+ok_button_text = "Select Current Folder"
 file_mode = 2
 access = 2
 
