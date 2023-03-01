@@ -1,4 +1,5 @@
 extends RefCounted
+class_name GameDescriptor
 
 var title: String
 var godot_version: String

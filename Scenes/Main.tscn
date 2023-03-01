@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/Main.gd" id="1_tstig"]
 [ext_resource type="Texture2D" uid="uid://s0pfm6agi7gy" path="res://Textures/Add.svg" id="1_ypae8"]
-[ext_resource type="Texture2D" uid="uid://cgdl6ls80n328" path="res://Textures/Folder.svg" id="3_76pst"]
+[ext_resource type="PackedScene" uid="uid://o4ix83ajmoe2" path="res://Nodes/PathEdit.tscn" id="4_w173i"]
 
 [node name="Main" type="VBoxContainer"]
 anchors_preset = 15
@@ -45,8 +45,57 @@ text = "Create Game Entry"
 icon = ExtResource("1_ypae8")
 expand_icon = true
 
+[node name="AddGame" type="AcceptDialog" parent="."]
+unique_name_in_owner = true
+title = "Add Game Entry"
+size = Vector2i(616, 180)
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="AddGame"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 608.0
+offset_bottom = 131.0
+
+[node name="VBoxContainer" type="GridContainer" parent="AddGame/VBoxContainer2"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="AddGame/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Descriptor Path"
+
+[node name="ImportPath" parent="AddGame/VBoxContainer2/VBoxContainer" instance=ExtResource("4_w173i")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label5" type="Label" parent="AddGame/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Game Path"
+
+[node name="ImportGame" parent="AddGame/VBoxContainer2/VBoxContainer" instance=ExtResource("4_w173i")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Control" type="Control" parent="AddGame/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="CopyLocal" type="CheckBox" parent="AddGame/VBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Copy Descriptor?"
+
+[node name="AddError" type="Label" parent="AddGame/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+horizontal_alignment = 1
+autowrap_mode = 2
+
 [node name="CreateGame" type="AcceptDialog" parent="."]
-title = "Add New Game"
+title = "Create Game Entry"
 size = Vector2i(616, 357)
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CreateGame"]
@@ -73,17 +122,10 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "Icon"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="CreateGame/VBoxContainer2/VBoxContainer"]
-layout_mode = 2
-
-[node name="CreateIcon" type="LineEdit" parent="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer2"]
+[node name="CreateIcon" parent="CreateGame/VBoxContainer2/VBoxContainer" instance=ExtResource("4_w173i")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Button" type="Button" parent="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-icon = ExtResource("3_76pst")
+mode = 1
 
 [node name="Label2" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
@@ -115,17 +157,9 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "Main Directory Path"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CreateGame/VBoxContainer2/VBoxContainer"]
-layout_mode = 2
-
-[node name="CreateDirectory" type="LineEdit" parent="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer"]
+[node name="CreateDirectory" parent="CreateGame/VBoxContainer2/VBoxContainer" instance=ExtResource("4_w173i")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Button" type="Button" parent="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-icon = ExtResource("3_76pst")
 
 [node name="CreateError" type="Label" parent="CreateGame/VBoxContainer2"]
 unique_name_in_owner = true
@@ -134,21 +168,13 @@ theme_override_colors/font_color = Color(1, 0, 0, 1)
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="FileDialog" type="FileDialog" parent="."]
-title = "Open a Directory"
-size = Vector2i(452, 162)
-exclusive = false
-ok_button_text = "Select Current Folder"
-file_mode = 2
-access = 2
-
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="on_add_game_entry"]
 [connection signal="pressed" from="VBoxContainer/Button2" to="." method="on_create_game_entry"]
+[connection signal="confirmed" from="AddGame" to="." method="import_game_entry"]
+[connection signal="text_changed" from="AddGame/VBoxContainer2/VBoxContainer/ImportPath" to="." method="validate_add"]
+[connection signal="text_changed" from="AddGame/VBoxContainer2/VBoxContainer/ImportGame" to="." method="validate_add"]
 [connection signal="confirmed" from="CreateGame" to="." method="create_game_entry"]
 [connection signal="text_changed" from="CreateGame/VBoxContainer2/VBoxContainer/CreateTitle" to="." method="validate_create" unbinds=1]
-[connection signal="text_changed" from="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer2/CreateIcon" to="." method="validate_create" unbinds=1]
-[connection signal="pressed" from="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer2/Button" to="." method="create_pick_icon"]
+[connection signal="text_changed" from="CreateGame/VBoxContainer2/VBoxContainer/CreateIcon" to="." method="validate_create"]
 [connection signal="text_changed" from="CreateGame/VBoxContainer2/VBoxContainer/CreateScene" to="." method="validate_create" unbinds=1]
-[connection signal="text_changed" from="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer/CreateDirectory" to="." method="validate_create" unbinds=1]
-[connection signal="pressed" from="CreateGame/VBoxContainer2/VBoxContainer/HBoxContainer/Button" to="." method="create_pick_directory"]
-[connection signal="dir_selected" from="FileDialog" to="." method="on_directory_selected"]
-[connection signal="file_selected" from="FileDialog" to="." method="on_file_selected"]
+[connection signal="text_changed" from="CreateGame/VBoxContainer2/VBoxContainer/CreateDirectory" to="." method="validate_create"]

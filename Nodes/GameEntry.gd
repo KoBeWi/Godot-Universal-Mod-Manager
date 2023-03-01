@@ -2,10 +2,10 @@ extends PanelContainer
 
 @onready var button: Button = $Button
 
-var entry: RefCounted
+var entry: GameDescriptor
 
 func set_game(entry_path: String):
-	entry = preload("res://Data/GameDescriptor.gd").new()
+	entry = GameDescriptor.new()
 	entry.load_data(entry_path)
 	
 	%Title.text = entry.title

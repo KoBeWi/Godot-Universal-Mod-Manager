@@ -1,4 +1,5 @@
 extends RefCounted
+class_name ModDescriptor
 
 var game: String
 var name: String

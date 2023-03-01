@@ -3,11 +3,62 @@ extends VBoxContainer
 enum {DIRECTORY_CREATE_GAME, DIRECTORY_ADD_GAME, DIRECTORY_ADD_DESCRIPTIOR}
 var directory_mode: int = -1
 
-var icon_formats := ["png", "jpg"]
+var icon_formats: PackedStringArray = ["png", "jpg"]
 
 func _ready() -> void:
 	for game in Registry.games:
 		add_game_entry(game)
+
+func on_add_game_entry() -> void:
+	%ImportPath.clear()
+	%ImportGame.clear()
+	%CopyLocal.button_pressed = true
+	validate_add()
+	
+	$AddGame.reset_size()
+	$AddGame.popup_centered()
+
+func validate_add() -> void:
+	if %ImportPath.text.is_empty():
+		set_add_error("Descriptor path can't be empty.")
+		return
+	
+	if not FileAccess.file_exists(%ImportPath.text.path_join("game.cfg")):
+		set_add_error("Descriptor directory invalid. Missing \"game.cfg\".")
+		return
+	
+	if %ImportGame.text.is_empty():
+		set_add_error("Game directory name can't be empty.")
+		return
+	
+	if DirAccess.get_files_at(%ImportGame.text).is_empty():
+		set_add_error("The provided directory does not contain any files.")
+		return
+	
+	set_add_error("")
+
+func set_add_error(error: String):
+	%AddError.text = error
+	$AddGame.get_ok_button().disabled = not error.is_empty()
+
+func import_game_entry() -> void:
+	var entry_folder: String = %ImportPath.text.simplify_path()
+	
+	if %CopyLocal.button_pressed:
+		var entry := GameDescriptor.new()
+		entry.load_data(entry_folder)
+		
+		var new_folder: String = "user://Games/" + %CreateTitle.text.validate_filename()
+		DirAccess.make_dir_recursive_absolute(new_folder)
+		DirAccess.copy_absolute(entry_folder.path_join("game.cfg"), new_folder.path_join("game.cfg"))
+		DirAccess.copy_absolute(entry_folder.path_join("icon.png"), new_folder.path_join("icon.png"))
+		
+		entry_folder = new_folder
+	
+	var entry_data := {entry_path = entry_folder, game_path = %ImportGame.text.simplify_path()}
+	Registry.games.append(entry_data)
+	Registry.save_game_entry_list()
+	add_game_entry(entry_data)
 
 func on_create_game_entry() -> void:
 	%CreateTitle.clear()
@@ -20,12 +71,12 @@ func on_create_game_entry() -> void:
 func validate_create() -> void:
 	if %CreateTitle.text.is_empty():
 		set_create_error("Title can't be empty.")
-		## TODO: czy unikalne?
+		## TODO: unikalne
 		return
 	
 	if not %CreateIcon.text.is_empty():
 		if not %CreateIcon.text.get_extension() in icon_formats:
-			set_create_error("Icon format invalid. Supported extensions: %s" % icon_formats)
+			set_create_error("Icon format invalid. Supported extensions: %s" % ", ".join(icon_formats))
 			return
 		
 		if not FileAccess.file_exists(%CreateIcon.text):
@@ -41,7 +92,7 @@ func validate_create() -> void:
 		return
 	
 	if %CreateDirectory.text.is_empty():
-		set_create_error("Game directory can't be empty.")
+		set_create_error("Game directory name can't be empty.")
 		return
 	
 	if DirAccess.get_files_at(%CreateDirectory.text).is_empty():
@@ -54,25 +105,8 @@ func set_create_error(error: String):
 	%CreateError.text = error
 	$CreateGame.get_ok_button().disabled = not error.is_empty()
 
-func create_pick_icon() -> void:
-	$FileDialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
-	$FileDialog.popup_centered_ratio(0.4)
-
-func create_pick_directory() -> void:
-	directory_mode = DIRECTORY_CREATE_GAME
-	$FileDialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
-	$FileDialog.popup_centered_ratio(0.4)
-
-func on_directory_selected(dir: String) -> void:
-	match directory_mode:
-		DIRECTORY_CREATE_GAME:
-			set_text(%CreateDirectory, dir)
-
-func on_file_selected(path: String) -> void:
-	set_text(%CreateIcon, path)
-
 func create_game_entry() -> void:
-	var entry := preload("res://Data/GameDescriptor.gd").new()
+	var entry := GameDescriptor.new()
 	entry.title = %CreateTitle.text
 	entry.godot_version = %CreateVersion.get_item_text(%CreateVersion.selected)
 	entry.main_scene = %CreateScene.text
@@ -86,7 +120,7 @@ func create_game_entry() -> void:
 		image.resize(80, 80, Image.INTERPOLATE_LANCZOS)
 		image.save_png(entry_path.path_join("icon.png"))
 	
-	var entry_data := {entry_path = entry_path, game_path = %CreateDirectory.text}
+	var entry_data := {entry_path = entry_path, game_path = %CreateDirectory.text.simplify_path()}
 	Registry.games.append(entry_data)
 	Registry.save_game_entry_list()
 	add_game_entry(entry_data)
