@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://Nodes/GameEntry.gd" id="1_t476h"]
 
 [node name="GameEntry" type="PanelContainer"]
-custom_minimum_size = Vector2(600, 0)
 offset_bottom = 96.0
 script = ExtResource("1_t476h")
 

@@ -1,4 +1,4 @@
-extends VBoxContainer
+extends Control
 
 var game_data: RefCounted
 var game_metadata: Dictionary
@@ -71,3 +71,6 @@ func toggle_mods(button_pressed: bool) -> void:
 			config.save(override_file)
 		
 		DirAccess.remove_absolute(game_metadata.game_path.path_join("GUMM_mod_loader.tscn"))
+
+func go_back() -> void:
+	get_tree().change_scene_to_file("res://Scenes/Main.tscn")
