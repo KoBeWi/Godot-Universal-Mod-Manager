@@ -25,16 +25,21 @@ func new_mod_dir_selected(dir: String) -> void:
 	new_mod_path = dir
 	%NewModName.clear()
 	%NewModDescription.clear()
-	%NewModeVersion.clear()
+	%NewModVersion.clear()
 	%NewModDialog2.popup_centered()
 
 func create_mod_confirmed() -> void:
+	new_mod_path = new_mod_path.path_join(%NewModName.text.validate_filename())
+	DirAccess.make_dir_absolute(new_mod_path)
+	
 	var mod_data := preload("res://Data/ModDescriptor.gd").new()
 	mod_data.game = game_data.title
 	mod_data.name = %NewModName.text
 	mod_data.description = %NewModDescription.text
-	mod_data.version = %NewModeVersion.text
+	mod_data.version = %NewModVersion.text
 	mod_data.save_data(new_mod_path)
+	
+	DirAccess.copy_absolute("res://System/%s/GUMM_mod.gd" % game_data.godot_version, new_mod_path.path_join("GUMM_mod.gd"))
 
 func open_game_directory() -> void:
 	OS.shell_open(game_metadata.game_path)
@@ -51,6 +56,9 @@ func toggle_mods(button_pressed: bool) -> void:
 			"3.x":
 				config.set_value("application", "run/main_scene", "res://GUMM_mod_loader.tscn")
 				DirAccess.copy_absolute("res://System/3.x/GUMM_mod_loader.tscn", game_metadata.game_path.path_join("GUMM_mod_loader.tscn"))
+		
+		config.set_value("gumm", "main_scene", game_data.main_scene)
+		config.set_value("gumm", "mod_list", ["X:/Godot/Projects/GUMM/Examples/Lumencraft/CrimsonScout"])
 		
 		config.save(override_file)
 	else:

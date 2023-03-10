@@ -1,10 +1,29 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
 
-[node name="Label" type="Label" parent="."]
-margin_left = 118.048
-margin_top = 84.4453
-margin_right = 158.048
-margin_bottom = 98.4453
-text = "witam"
+var loaded_mods = []
+
+func _ready():
+	var mod_list = ProjectSettings.get_setting(\"gumm/mod_list\")
+	for mod in mod_list:
+		load_mod(mod)
+	
+	get_tree().set_meta(\"GUMM_mods\", loaded_mods)
+	get_tree().change_scene(ProjectSettings.get_setting(\"gumm/main_scene\"))
+
+func load_mod(mod_path):
+	var mod_cfg = ConfigFile.new()
+	mod_cfg.load(mod_path.plus_file(\"mod.cfg\"))
+	prints(\"Loading mod:\", mod_cfg.get_value(\"Godot Mod\", \"name\", \"[unknown]\"))
+	
+	var mod_ref = load(mod_path.plus_file(\"mod.gd\")).new()
+	mod_ref.initialize(mod_path, get_tree())
+	loaded_mods.append(mod_ref)
+
+	print(\"OK\")
+"
+
+[node name="GUMM" type="Node"]
+script = SubResource( 1 )
