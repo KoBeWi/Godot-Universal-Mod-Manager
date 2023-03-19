@@ -35,13 +35,15 @@ text_overrun_behavior = 1
 layout_mode = 2
 alignment = 1
 
-[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Installed" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "%d mods installed"
 horizontal_alignment = 1
 
-[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Active" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "%d mods active"

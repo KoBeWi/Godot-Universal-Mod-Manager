@@ -1,8 +1,11 @@
-[gd_scene format=3 uid="uid://btmccox413xng"]
+[gd_scene load_steps=2 format=3 uid="uid://btmccox413xng"]
+
+[ext_resource type="Script" path="res://Nodes/ModEntry.gd" id="1_nu3s4"]
 
 [node name="ModEntry" type="PanelContainer"]
 offset_right = 330.0
 offset_bottom = 96.0
+script = ExtResource("1_nu3s4")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -28,25 +31,38 @@ size_flags_horizontal = 3
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 30
 text = "Mod Name"
 text_overrun_behavior = 1
 
+[node name="Version" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+horizontal_alignment = 2
+
 [node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="CheckButton" type="CheckButton" parent="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Active" type="CheckButton" parent="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Enabled"
+text = "Active"
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="OpenFolder" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Open Folder"
 
-[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Description" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 text = "Description"
+
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Active" to="." method="toggle_active"]

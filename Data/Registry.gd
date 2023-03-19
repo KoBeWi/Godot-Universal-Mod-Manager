@@ -22,6 +22,12 @@ func add_new_game_entry(entry_path: String, game_path: String) -> GameData:
 	save_game_entry_list()
 	return game
 
+func add_new_mod_entry(game: GameData, load_path: String) -> GameData.ModData:
+	var mod := GameData.ModData.new({load_path = load_path, active = true})
+	game.installed_mods.append(mod)
+	save_game_entry_list()
+	return mod
+
 class GameData:
 	class ModData:
 		var load_path: String

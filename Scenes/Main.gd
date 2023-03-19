@@ -124,7 +124,7 @@ func create_game_entry() -> void:
 func add_game_entry(game: Registry.GameData):
 	var entry = preload("res://Nodes/GameEntry.tscn").instantiate()
 	%GameList.add_child(entry)
-	entry.set_game(game.entry_path)
+	entry.set_game(game)
 	entry.button.pressed.connect(open_game.bind(game.entry_path))
 
 func open_game(path: String):

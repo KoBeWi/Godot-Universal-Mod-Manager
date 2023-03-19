@@ -4,17 +4,20 @@ var game_data: RefCounted
 var game_metadata: Registry.GameData
 
 func _ready() -> void:
-	game_data = preload("res://Data/GameDescriptor.gd").new()
+	game_data = GameDescriptor.new()
 	game_data.load_data(get_tree().get_meta(&"current_game", ""))
 	for meta in Registry.games:
 		if meta.entry_path == game_data.file_path:
 			game_metadata = meta
 			break
 	
+	for mod in game_metadata.installed_mods:
+		add_mod_entry(mod)
+	
 	%GameTitle.text = game_data.title
 	%GameIcon.texture = ImageTexture.create_from_image(Image.load_from_file(game_data.file_path.path_join("icon.png")))
 	%GodotVersion.text %= game_data.godot_version
-	%ModsEnabled.set_pressed_no_signal(FileAccess.file_exists(game_metadata.game_path.path_join("GUMM_mod_loader.tscn")))
+	%ModsEnabled.set_pressed_no_signal(game_metadata.mods_enabled)
 
 func import_mod() -> void:
 	import_mod_update()
@@ -37,7 +40,7 @@ func import_mod_update() -> void:
 		set_import_error("No \"mod.cfg\" found at the given location.")
 		return
 	
-	var mod_data := preload("res://Data/ModDescriptor.gd").new()
+	var mod_data := GameDescriptor.new()
 	mod_data.load_data(%ImportModPath.text.path_join("mod.cfg"))
 	
 	if mod_data.game != game_data.title:
@@ -55,7 +58,14 @@ func set_import_error(error: String):
 	$ImportModDialog.get_ok_button().disabled = not error.is_empty()
 
 func import_mod_confirmed() -> void:
-	pass # Replace with function body.
+	var entry := Registry.add_new_mod_entry(game_metadata, %ImportModPath.text)
+	add_mod_entry(entry)
+
+func add_mod_entry(mod: Registry.GameData.ModData):
+	var entry = preload("res://Nodes/ModEntry.tscn").instantiate()
+	%ModList.add_child(entry)
+	entry.owner = self
+	entry.set_mod(mod)
 
 func create_mod() -> void:
 	%NewModPath.clear()
@@ -88,7 +98,7 @@ func set_create_error(error: String):
 	$NewModDialog.get_ok_button().disabled = not error.is_empty()
 
 func create_mod_confirmed() -> void:
-	var mod_data := preload("res://Data/ModDescriptor.gd").new()
+	var mod_data := ModDescriptor.new()
 	mod_data.game = game_data.title
 	mod_data.name = %NewModName.text
 	mod_data.description = %NewModDescription.text
@@ -96,28 +106,20 @@ func create_mod_confirmed() -> void:
 	mod_data.save_data(%NewModPath.text)
 	
 	DirAccess.copy_absolute("res://System/%s/GUMM_mod.gd" % game_data.godot_version, %NewModPath.text.path_join("GUMM_mod.gd"))
+	
+	Registry.add_new_mod_entry(game_metadata, %NewModPath.text)
 
 func open_game_directory() -> void:
 	OS.shell_open(game_metadata.game_path)
 
 func toggle_mods(button_pressed: bool) -> void:
-	var override_file: String = game_metadata.game_path.path_join("override.cfg")
-	var config := ConfigFile.new()
+	game_metadata.mods_enabled = button_pressed
 	
 	if button_pressed:
-		if FileAccess.file_exists(override_file):
-			config.load(override_file)
-		
-		match game_data.godot_version:
-			"3.x":
-				config.set_value("application", "run/main_scene", "res://GUMM_mod_loader.tscn")
-				DirAccess.copy_absolute("res://System/3.x/GUMM_mod_loader.tscn", game_metadata.game_path.path_join("GUMM_mod_loader.tscn"))
-		
-		config.set_value("gumm", "main_scene", game_data.main_scene)
-		config.set_value("gumm", "mod_list", ["X:/Godot/Projects/GUMM/Examples/Lumencraft/CrimsonScout"])
-		
-		config.save(override_file)
+		apply_mods()
 	else:
+		var override_file := get_override_path()
+		var config := ConfigFile.new()
 		config.load(override_file)
 		
 		var deleted: bool
@@ -144,6 +146,25 @@ func toggle_mods(button_pressed: bool) -> void:
 			config.save(override_file)
 		
 		DirAccess.remove_absolute(game_metadata.game_path.path_join("GUMM_mod_loader.tscn"))
+
+func apply_mods():
+	var override_file := get_override_path()
+	var config := ConfigFile.new()
+	if FileAccess.file_exists(override_file):
+		config.load(override_file)
+	
+	match game_data.godot_version:
+		"3.x":
+			config.set_value("application", "run/main_scene", "res://GUMM_mod_loader.tscn")
+			DirAccess.copy_absolute("res://System/3.x/GUMM_mod_loader.tscn", game_metadata.game_path.path_join("GUMM_mod_loader.tscn"))
+	
+	config.set_value("gumm", "main_scene", game_data.main_scene)
+	config.set_value("gumm", "mod_list", game_metadata.installed_mods.filter(func(mod): return mod.active).map(func(mod): return mod.load_path))
+	
+	config.save(override_file)
+
+func get_override_path() -> String:
+	return game_metadata.game_path.path_join("override.cfg")
 
 func go_back() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Main.tscn")
