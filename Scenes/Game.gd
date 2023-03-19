@@ -1,9 +1,7 @@
 extends Control
 
 var game_data: RefCounted
-var game_metadata: Dictionary
-
-var new_mod_path: String
+var game_metadata: Registry.GameData
 
 func _ready() -> void:
 	game_data = preload("res://Data/GameDescriptor.gd").new()
@@ -18,28 +16,86 @@ func _ready() -> void:
 	%GodotVersion.text %= game_data.godot_version
 	%ModsEnabled.set_pressed_no_signal(FileAccess.file_exists(game_metadata.game_path.path_join("GUMM_mod_loader.tscn")))
 
-func create_mod() -> void:
-	%NewModDialog1.popup_centered()
+func import_mod() -> void:
+	import_mod_update()
+	$ImportModDialog.popup_centered()
 
-func new_mod_dir_selected(dir: String) -> void:
-	new_mod_path = dir
+func import_mod_update() -> void:
+	%ImportModName.text = ""
+	%ImportModDescription.text = ""
+	%ImportModVersion.text = ""
+	
+	if %ImportModPath.text.is_empty():
+		set_import_error("Path can't be empty.")
+		return
+	
+	if not DirAccess.dir_exists_absolute(%ImportModPath.text):
+		set_import_error("The provided directory does not exist.")
+		return
+	
+	if not FileAccess.file_exists(%ImportModPath.text.path_join("mod.cfg")):
+		set_import_error("No \"mod.cfg\" found at the given location.")
+		return
+	
+	var mod_data := preload("res://Data/ModDescriptor.gd").new()
+	mod_data.load_data(%ImportModPath.text.path_join("mod.cfg"))
+	
+	if mod_data.game != game_data.title:
+		set_import_error("Mod isn't made for \"%s\"." % game_data.title)
+		return
+	
+	%ImportModName.text = mod_data.name
+	%ImportModDescription.text = mod_data.description
+	%ImportModVersion.text = mod_data.version
+	
+	set_import_error("")
+
+func set_import_error(error: String):
+	%ImportError.text = error
+	$ImportModDialog.get_ok_button().disabled = not error.is_empty()
+
+func import_mod_confirmed() -> void:
+	pass # Replace with function body.
+
+func create_mod() -> void:
+	%NewModPath.clear()
 	%NewModName.clear()
 	%NewModDescription.clear()
 	%NewModVersion.clear()
-	%NewModDialog2.popup_centered()
+	$NewModDialog.popup_centered()
+
+func validate_new_mod():
+	if %NewModPath.text.is_empty():
+		set_create_error("Path can't be empty.")
+		return
+	
+	if not DirAccess.dir_exists_absolute(%NewModPath.text):
+		set_create_error("The provided directory does not exist.")
+		return
+	
+	if not DirAccess.get_files_at(%NewModPath.text).is_empty():
+		set_create_error("The selected directory must not contain any files.")
+		return
+	
+	if %NewModName.text.is_empty():
+		set_create_error("Mod name can't be empty.")
+		return
+	
+	set_create_error("")
+
+func set_create_error(error: String):
+	%NewModError.text = error
+	$NewModDialog.get_ok_button().disabled = not error.is_empty()
 
 func create_mod_confirmed() -> void:
-	new_mod_path = new_mod_path.path_join(%NewModName.text.validate_filename())
-	DirAccess.make_dir_absolute(new_mod_path)
-	
 	var mod_data := preload("res://Data/ModDescriptor.gd").new()
 	mod_data.game = game_data.title
 	mod_data.name = %NewModName.text
 	mod_data.description = %NewModDescription.text
 	mod_data.version = %NewModVersion.text
-	mod_data.save_data(new_mod_path)
+	mod_data.save_data(%NewModPath.text)
 	
-	DirAccess.copy_absolute("res://System/%s/GUMM_mod.gd" % game_data.godot_version, new_mod_path.path_join("GUMM_mod.gd"))
+	DirAccess.copy_absolute("res://System/%s/GUMM_mod.gd" % game_data.godot_version, %NewModPath.text.path_join("GUMM_mod.gd"))
 
 func open_game_directory() -> void:
 	OS.shell_open(game_metadata.game_path)
@@ -65,17 +121,26 @@ func toggle_mods(button_pressed: bool) -> void:
 		config.load(override_file)
 		
 		var deleted: bool
-		if config.get_sections().size() == 1:
-			match game_data.godot_version:
-					"3.x":
-						if config.get_section_keys("application").size() == 1:
-							DirAccess.remove_absolute(override_file)
-							deleted = true
+		var config_sections := config.get_sections()
+		if config_sections.size() == 1 or config_sections.size() == 2:
+			var has: int
+			has += int("application" in config_sections)
+			has += int("gumm" in config_sections)
+			
+			if has == config_sections.size():
+				match game_data.godot_version:
+						"3.x":
+							if config.get_section_keys("application").size() == 1:
+								DirAccess.remove_absolute(override_file)
+								deleted = true
 		
 		if not deleted:
 			match game_data.godot_version:
 				"3.x":
 					config.erase_section_key("application", "run/main_scene")
+			
+			if config.has_section("gumm"):
+				config.erase_section("gumm")
 			config.save(override_file)
 		
 		DirAccess.remove_absolute(game_metadata.game_path.path_join("GUMM_mod_loader.tscn"))

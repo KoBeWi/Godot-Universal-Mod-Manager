@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://csotwr1d3ubkw"]
+[gd_scene load_steps=4 format=3 uid="uid://csotwr1d3ubkw"]
 
 [ext_resource type="Script" path="res://Scenes/Game.gd" id="1_a8a8g"]
 [ext_resource type="Texture2D" uid="uid://s0pfm6agi7gy" path="res://Textures/Add.svg" id="1_vji8i"]
+[ext_resource type="PackedScene" uid="uid://o4ix83ajmoe2" path="res://Nodes/PathEdit.tscn" id="3_s7q5b"]
 
 [node name="Game" type="MarginContainer"]
 anchors_preset = 15
@@ -81,7 +82,7 @@ layout_mode = 2
 [node name="Button" type="Button" parent="VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-text = "Add Mod"
+text = "Import Mod"
 icon = ExtResource("1_vji8i")
 expand_icon = true
 
@@ -92,61 +93,132 @@ text = "Create Mod"
 icon = ExtResource("1_vji8i")
 expand_icon = true
 
-[node name="NewModDialog1" type="FileDialog" parent="."]
-unique_name_in_owner = true
-title = "Open a Directory"
-position = Vector2i(-800, 0)
-size = Vector2i(600, 400)
-min_size = Vector2i(600, 400)
-ok_button_text = "Wybierz bieżący katalog"
-file_mode = 2
-access = 2
-
-[node name="NewModDialog2" type="ConfirmationDialog" parent="."]
-unique_name_in_owner = true
-title = "Create Mod"
+[node name="ImportModDialog" type="ConfirmationDialog" parent="."]
+title = "Import Mod"
 position = Vector2i(-800, 600)
-size = Vector2i(600, 200)
+size = Vector2i(600, 248)
 min_size = Vector2i(600, 200)
 
-[node name="GridContainer" type="GridContainer" parent="NewModDialog2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ImportModDialog"]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 592.0
-offset_bottom = 151.0
+offset_bottom = 199.0
+
+[node name="GridContainer" type="GridContainer" parent="ImportModDialog/VBoxContainer"]
+layout_mode = 2
 theme_override_constants/h_separation = 30
 columns = 2
 
-[node name="Label" type="Label" parent="NewModDialog2/GridContainer"]
+[node name="Label" type="Label" parent="ImportModDialog/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Path"
+
+[node name="ImportModPath" parent="ImportModDialog/VBoxContainer/GridContainer" instance=ExtResource("3_s7q5b")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="ImportModDialog/VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Name"
 
-[node name="NewModName" type="LineEdit" parent="NewModDialog2/GridContainer"]
+[node name="ImportModName" type="LineEdit" parent="ImportModDialog/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+editable = false
+caret_blink = true
+caret_blink_interval = 0.5
+
+[node name="Label2" type="Label" parent="ImportModDialog/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Description"
+
+[node name="ImportModDescription" type="TextEdit" parent="ImportModDialog/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+editable = false
+
+[node name="Label3" type="Label" parent="ImportModDialog/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Version"
+
+[node name="ImportModVersion" type="LineEdit" parent="ImportModDialog/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+editable = false
+caret_blink = true
+caret_blink_interval = 0.5
+
+[node name="ImportError" type="Label" parent="ImportModDialog/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+horizontal_alignment = 1
+
+[node name="NewModDialog" type="ConfirmationDialog" parent="."]
+title = "Create Mod"
+position = Vector2i(-800, 600)
+size = Vector2i(600, 248)
+min_size = Vector2i(600, 200)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NewModDialog"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 592.0
+offset_bottom = 199.0
+
+[node name="GridContainer" type="GridContainer" parent="NewModDialog/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 30
+columns = 2
+
+[node name="Label" type="Label" parent="NewModDialog/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Path"
+
+[node name="NewModPath" parent="NewModDialog/VBoxContainer/GridContainer" instance=ExtResource("3_s7q5b")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="NewModDialog/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Name"
+
+[node name="NewModName" type="LineEdit" parent="NewModDialog/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="Label2" type="Label" parent="NewModDialog2/GridContainer"]
+[node name="Label2" type="Label" parent="NewModDialog/VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Description"
 
-[node name="NewModDescription" type="TextEdit" parent="NewModDialog2/GridContainer"]
+[node name="NewModDescription" type="TextEdit" parent="NewModDialog/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="NewModDialog2/GridContainer"]
+[node name="Label3" type="Label" parent="NewModDialog/VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Version"
 
-[node name="NewModVersion" type="LineEdit" parent="NewModDialog2/GridContainer"]
+[node name="NewModVersion" type="LineEdit" parent="NewModDialog/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 caret_blink = true
 caret_blink_interval = 0.5
+
+[node name="NewModError" type="Label" parent="NewModDialog/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 2
@@ -156,7 +228,11 @@ text = "Back"
 
 [connection signal="pressed" from="VBoxContainer2/HBoxContainer/HBoxContainer2/Button" to="." method="open_game_directory"]
 [connection signal="toggled" from="VBoxContainer2/HBoxContainer/ModsEnabled" to="." method="toggle_mods"]
+[connection signal="pressed" from="VBoxContainer2/VBoxContainer/Button" to="." method="import_mod"]
 [connection signal="pressed" from="VBoxContainer2/VBoxContainer/Button2" to="." method="create_mod"]
-[connection signal="dir_selected" from="NewModDialog1" to="." method="new_mod_dir_selected"]
-[connection signal="confirmed" from="NewModDialog2" to="." method="create_mod_confirmed"]
+[connection signal="confirmed" from="ImportModDialog" to="." method="import_mod_confirmed"]
+[connection signal="text_changed" from="ImportModDialog/VBoxContainer/GridContainer/ImportModPath" to="." method="import_mod_update"]
+[connection signal="confirmed" from="NewModDialog" to="." method="create_mod_confirmed"]
+[connection signal="text_changed" from="NewModDialog/VBoxContainer/GridContainer/NewModPath" to="." method="validate_new_mod"]
+[connection signal="text_changed" from="NewModDialog/VBoxContainer/GridContainer/NewModName" to="." method="validate_new_mod" unbinds=1]
 [connection signal="pressed" from="Button" to="." method="go_back"]

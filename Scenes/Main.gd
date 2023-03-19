@@ -55,9 +55,7 @@ func import_game_entry() -> void:
 		
 		entry_folder = new_folder
 	
-	var entry_data := {entry_path = entry_folder, game_path = %ImportGame.text.simplify_path()}
-	Registry.games.append(entry_data)
-	Registry.save_game_entry_list()
+	var entry_data := Registry.add_new_game_entry(entry_folder, %ImportGame.text.simplify_path())
 	add_game_entry(entry_data)
 
 func on_create_game_entry() -> void:
@@ -120,12 +118,10 @@ func create_game_entry() -> void:
 		image.resize(80, 80, Image.INTERPOLATE_LANCZOS)
 		image.save_png(entry_path.path_join("icon.png"))
 	
-	var entry_data := {entry_path = entry_path, game_path = %CreateDirectory.text.simplify_path()}
-	Registry.games.append(entry_data)
-	Registry.save_game_entry_list()
+	var entry_data := Registry.add_new_game_entry(entry_path, %CreateDirectory.text.simplify_path())
 	add_game_entry(entry_data)
 
-func add_game_entry(game: Dictionary):
+func add_game_entry(game: Registry.GameData):
 	var entry = preload("res://Nodes/GameEntry.tscn").instantiate()
 	%GameList.add_child(entry)
 	entry.set_game(game.entry_path)

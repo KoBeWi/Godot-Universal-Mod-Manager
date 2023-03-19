@@ -33,7 +33,7 @@ layout_mode = 2
 [node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-text = "Add Game"
+text = "Import Game"
 icon = ExtResource("1_ypae8")
 expand_icon = true
 
