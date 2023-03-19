@@ -161,14 +161,14 @@ horizontal_alignment = 1
 [node name="NewModDialog" type="ConfirmationDialog" parent="."]
 title = "Create Mod"
 position = Vector2i(-800, 600)
-size = Vector2i(600, 248)
+size = Vector2i(600, 280)
 min_size = Vector2i(600, 200)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="NewModDialog"]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 592.0
-offset_bottom = 199.0
+offset_bottom = 231.0
 
 [node name="GridContainer" type="GridContainer" parent="NewModDialog/VBoxContainer"]
 layout_mode = 2
@@ -182,6 +182,15 @@ text = "Path"
 [node name="NewModPath" parent="NewModDialog/VBoxContainer/GridContainer" instance=ExtResource("3_s7q5b")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="Label5" type="Label" parent="NewModDialog/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Icon Path"
+
+[node name="IconPath" parent="NewModDialog/VBoxContainer/GridContainer" instance=ExtResource("3_s7q5b")]
+unique_name_in_owner = true
+layout_mode = 2
+mode = 1
 
 [node name="Label4" type="Label" parent="NewModDialog/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -220,6 +229,8 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 horizontal_alignment = 1
 
+[node name="DeleteConfirm" type="ConfirmationDialog" parent="."]
+
 [node name="Button" type="Button" parent="."]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -234,5 +245,7 @@ text = "Back"
 [connection signal="text_changed" from="ImportModDialog/VBoxContainer/GridContainer/ImportModPath" to="." method="import_mod_update"]
 [connection signal="confirmed" from="NewModDialog" to="." method="create_mod_confirmed"]
 [connection signal="text_changed" from="NewModDialog/VBoxContainer/GridContainer/NewModPath" to="." method="validate_new_mod"]
+[connection signal="text_changed" from="NewModDialog/VBoxContainer/GridContainer/IconPath" to="." method="validate_new_mod"]
 [connection signal="text_changed" from="NewModDialog/VBoxContainer/GridContainer/NewModName" to="." method="validate_new_mod" unbinds=1]
+[connection signal="confirmed" from="DeleteConfirm" to="." method="remove_mod" binds= [true, true]]
 [connection signal="pressed" from="Button" to="." method="go_back"]

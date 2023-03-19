@@ -3,8 +3,6 @@ extends VBoxContainer
 enum {DIRECTORY_CREATE_GAME, DIRECTORY_ADD_GAME, DIRECTORY_ADD_DESCRIPTIOR}
 var directory_mode: int = -1
 
-var icon_formats: PackedStringArray = ["png", "jpg"]
-
 func _ready() -> void:
 	for game in Registry.games:
 		add_game_entry(game)
@@ -73,8 +71,8 @@ func validate_create() -> void:
 		return
 	
 	if not %CreateIcon.text.is_empty():
-		if not %CreateIcon.text.get_extension() in icon_formats:
-			set_create_error("Icon format invalid. Supported extensions: %s" % ", ".join(icon_formats))
+		if not %CreateIcon.text.get_extension() in Registry.ICON_FORMATS:
+			set_create_error("Icon format invalid. Supported extensions: %s" % ", ".join(Registry.ICON_FORMATS))
 			return
 		
 		if not FileAccess.file_exists(%CreateIcon.text):

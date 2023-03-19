@@ -14,6 +14,7 @@ config/name="Godot Universal Mod Manager"
 run/main_scene="res://Scenes/Main.tscn"
 config/features=PackedStringArray("4.0")
 run/low_processor_mode=true
+config/tags=PackedStringArray("tool")
 
 [autoload]
 
@@ -29,4 +30,5 @@ window/subwindows/embed_subwindows=false
 
 [rendering]
 
+renderer/rendering_method="gl_compatibility"
 environment/defaults/default_clear_color=Color(0.211765, 0.239216, 0.321569, 1)

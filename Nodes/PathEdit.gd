@@ -1,6 +1,7 @@
 extends HBoxContainer
 
 @onready var line_edit: LineEdit = $LineEdit
+@onready var button: Button = $Button
 @onready var file_dialog: FileDialog = $FileDialog
 
 @export_enum("Folder", "File") var mode: int
@@ -11,6 +12,12 @@ var text: String:
 	get:
 		return line_edit.text
 
+var disabled: bool:
+	set(v):
+		disabled = v
+		line_edit.editable = not v
+		button.disabled = v
+
 signal text_changed
 
 func _ready() -> void:
@@ -18,6 +25,7 @@ func _ready() -> void:
 		file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
 		file_dialog.dir_selected.connect(dialog_select)
 	elif mode == 1:
+		file_dialog.filters = Array(Registry.ICON_FORMATS).map(func(ext: String): return "*." + ext)
 		file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 		file_dialog.file_selected.connect(dialog_select)
 

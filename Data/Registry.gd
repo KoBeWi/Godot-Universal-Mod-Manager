@@ -1,6 +1,7 @@
 extends Node
 
 const GAME_ENTRIES_FILE = "user://game_list.txt"
+const ICON_FORMATS: PackedStringArray = ["png", "jpg"]
 
 var games: Array[GameData]
 
@@ -28,6 +29,10 @@ func add_new_mod_entry(game: GameData, load_path: String) -> GameData.ModData:
 	save_game_entry_list()
 	return mod
 
+func remove_mod_entry(game: GameData, mod: GameData.ModData):
+	game.installed_mods.erase(mod)
+	save_game_entry_list()
+
 class GameData:
 	class ModData:
 		var load_path: String
@@ -36,6 +41,9 @@ class GameData:
 		func _init(data: Dictionary) -> void:
 			load_path = data.load_path
 			active = data.active
+			
+			if not DirAccess.dir_exists_absolute(load_path):
+				active = false
 		
 		func get_var() -> Dictionary:
 			return {load_path = load_path, active = active}

@@ -7,15 +7,17 @@ var description: String
 var version: String
 var dependencies: PackedStringArray
 
-func load_data(path: String):
+func load_data(path: String) -> bool:
 	var config_file := ConfigFile.new()
-	if not config_file.load(path) == OK:
-		return
+	if config_file.load(path) != OK:
+		return false
 	
 	game = config_file.get_value("Godot Mod", "game")
 	name = config_file.get_value("Godot Mod", "name")
 	description = config_file.get_value("Godot Mod", "description")
 	version = config_file.get_value("Godot Mod", "version")
+	
+	return true
 
 func save_data(path: String):
 	var config_file := ConfigFile.new()
