@@ -157,6 +157,7 @@ func create_mod_confirmed() -> void:
 		return
 	
 	DirAccess.copy_absolute("res://System/%s/GUMM_mod.gd" % game_data.godot_version, %NewModPath.text.path_join("GUMM_mod.gd"))
+	DirAccess.copy_absolute("res://System/%s/mod.gd" % game_data.godot_version, %NewModPath.text.path_join("mod.gd"))
 	
 	var mod_entry := Registry.add_new_mod_entry(game_metadata, %NewModPath.text)
 	add_mod_entry(mod_entry)
