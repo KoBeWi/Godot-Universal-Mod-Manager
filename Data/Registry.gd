@@ -33,6 +33,16 @@ func remove_mod_entry(game: GameData, mod: GameData.ModData):
 	game.installed_mods.erase(mod)
 	save_game_entry_list()
 
+func smart_resize_to_80(image: Image):
+	if image.get_width() == image.get_height():
+		image.resize(80, 80, Image.INTERPOLATE_LANCZOS)
+	elif image.get_width() > image.get_height():
+		image.resize(80, int(80.0 * image.get_height() / image.get_width()))
+	elif image.get_width() < image.get_height():
+		image.resize(int(80.0 * image.get_width() / image.get_height()), 80)
+	else:
+		get_tree().quit(1) # impossible
+
 class GameData:
 	class ModData:
 		var load_path: String

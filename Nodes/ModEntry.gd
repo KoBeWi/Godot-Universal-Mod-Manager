@@ -17,6 +17,7 @@ func set_mod(meta: Registry.GameData.ModData):
 		%Description.text = "Mod not found at path: %s." % metadata.load_path
 		%Active.disabled = true
 		%Edit.disabled = true
+		%OpenFolder.pressed.connect($FileDialog.popup_centered_ratio.bind(0.4))
 		return
 	
 	%Name.text = entry.name
@@ -35,3 +36,29 @@ func set_mod(meta: Registry.GameData.ModData):
 func toggle_active(button_pressed: bool) -> void:
 	metadata.active = button_pressed
 	owner.apply_mods()
+
+func try_recover(dir: String) -> void:
+	if dir.is_empty():
+		shoot_error.call_deferred("Path can't be empty.")
+		return
+	
+	if dir.is_empty():
+		shoot_error.call_deferred("Path can't be empty.")
+		return
+	
+	if not DirAccess.dir_exists_absolute(dir):
+		shoot_error.call_deferred("The provided directory does not exist.")
+		return
+	
+	if not FileAccess.file_exists(dir.path_join("mod.cfg")):
+		shoot_error.call_deferred("No \"mod.cfg\" found at the given location.")
+		return
+	
+	metadata.load_path = dir
+	Registry.save_game_entry_list()
+	
+	owner.refresh_entry(self)
+
+func shoot_error(error: String):
+	$AcceptDialog.dialog_text = error
+	$AcceptDialog.popup_centered()

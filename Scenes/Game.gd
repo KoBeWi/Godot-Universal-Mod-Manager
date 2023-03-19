@@ -71,6 +71,7 @@ func set_import_error(error: String):
 func import_mod_confirmed() -> void:
 	var entry := Registry.add_new_mod_entry(game_metadata, %ImportModPath.text)
 	add_mod_entry(entry)
+	apply_mods()
 
 func add_mod_entry(mod: Registry.GameData.ModData) -> Control:
 	var entry: Control = preload("res://Nodes/ModEntry.tscn").instantiate()
@@ -125,7 +126,7 @@ func validate_new_mod():
 	
 	set_create_error("")
 	
-	if %IconPath.text.is_empty() or not FileAccess.file_exists(%IconPath.text) or not %IconPath.text.get_extension() in Registry.ICON_FORMATS:
+	if not %IconPath.disabled and (%IconPath.text.is_empty() or not FileAccess.file_exists(%IconPath.text) or not %IconPath.text.get_extension() in Registry.ICON_FORMATS):
 		set_create_warning("Icon path invalid. The mod will have no icon.")
 
 func set_create_error(error: String):
@@ -148,7 +149,7 @@ func create_mod_confirmed() -> void:
 	if not %IconPath.text.is_empty() and FileAccess.file_exists(%IconPath.text) and %IconPath.text.get_extension() in Registry.ICON_FORMATS:
 		var image := Image.load_from_file(%IconPath.text)
 		if image:
-			image.resize(80, 80)
+			Registry.smart_resize_to_80(image)
 			image.save_png(%NewModPath.text.path_join("icon.png"))
 	
 	if entry_to_update:
@@ -159,6 +160,7 @@ func create_mod_confirmed() -> void:
 	
 	var mod_entry := Registry.add_new_mod_entry(game_metadata, %NewModPath.text)
 	add_mod_entry(mod_entry)
+	apply_mods()
 
 func open_game_directory() -> void:
 	OS.shell_open(game_metadata.game_path)

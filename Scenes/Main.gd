@@ -113,7 +113,7 @@ func create_game_entry() -> void:
 	
 	if not %CreateIcon.text.is_empty():
 		var image := Image.load_from_file(%CreateIcon.text)
-		image.resize(80, 80, Image.INTERPOLATE_LANCZOS)
+		Registry.smart_resize_to_80(image)
 		image.save_png(entry_path.path_join("icon.png"))
 	
 	var entry_data := Registry.add_new_game_entry(entry_path, %CreateDirectory.text.simplify_path())

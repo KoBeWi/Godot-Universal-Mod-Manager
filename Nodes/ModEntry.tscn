@@ -83,4 +83,13 @@ layout_mode = 2
 tooltip_text = "Delete"
 icon = ExtResource("4_lc07v")
 
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a Directory"
+size = Vector2i(425, 162)
+ok_button_text = "Wybierz ten folder"
+file_mode = 2
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+
 [connection signal="toggled" from="HBoxContainer/VBoxContainer/HBoxContainer/Active" to="." method="toggle_active"]
+[connection signal="dir_selected" from="FileDialog" to="." method="try_recover"]
