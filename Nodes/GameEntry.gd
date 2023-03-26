@@ -12,7 +12,7 @@ func set_game(meta: Registry.GameData):
 	metadata = meta
 	
 	entry = GameDescriptor.new()
-	if not entry.load_data(metadata.entry_path.path_join("game.cfg")):
+	if not entry.load_data(metadata.entry_path):
 		missing = true
 		%Title.text = "MISSING"
 		%Title.modulate = Color.RED

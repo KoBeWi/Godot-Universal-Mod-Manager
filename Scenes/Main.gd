@@ -46,10 +46,9 @@ func import_game_entry() -> void:
 	
 	if %CopyLocal.button_pressed:
 		var entry := GameDescriptor.new()
-		entry.load_data(entry_folder.path_join("game.cfg"))
+		entry.load_data(entry_folder)
 		
 		var new_folder: String = "user://Games/" + entry.title.validate_filename()
-		prints(new_folder, entry.title, entry.title.validate_filename())
 		DirAccess.make_dir_recursive_absolute(new_folder)
 		DirAccess.copy_absolute(entry_folder.path_join("game.cfg"), new_folder.path_join("game.cfg"))
 		DirAccess.copy_absolute(entry_folder.path_join("icon.png"), new_folder.path_join("icon.png"))

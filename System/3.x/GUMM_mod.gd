@@ -25,7 +25,7 @@ func load_texture(path):
 
 func load_ogg(path):
 	var file = File.new()
-	file.open(get_full_path(path))
+	file.open(get_full_path(path), File.READ)
 	
 	var data = file.get_buffer(file.get_len())
 	
@@ -36,7 +36,7 @@ func load_ogg(path):
 
 func load_mp3(path):
 	var file = File.new()
-	file.open(get_full_path(path))
+	file.open(get_full_path(path), File.READ)
 	
 	var data = file.get_buffer(file.get_len())
 	

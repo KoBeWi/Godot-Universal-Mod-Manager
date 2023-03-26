@@ -9,7 +9,7 @@ var dependencies: PackedStringArray
 
 func load_data(path: String) -> bool:
 	var config_file := ConfigFile.new()
-	if config_file.load(path) != OK:
+	if config_file.load(path.path_join("mod.cfg")) != OK:
 		return false
 	
 	game = config_file.get_value("Godot Mod", "game")

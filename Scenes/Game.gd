@@ -7,10 +7,12 @@ var entry_to_update: Control
 var entry_to_delete: Control
 
 func _ready() -> void:
+	var entry_path: String = get_tree().get_meta(&"current_game", "")
 	game_data = GameDescriptor.new()
-	game_data.load_data(get_tree().get_meta(&"current_game", ""))
+	game_data.load_data(entry_path)
+	
 	for meta in Registry.games:
-		if meta.entry_path == game_data.file_path:
+		if meta.entry_path == entry_path:
 			game_metadata = meta
 			break
 	
@@ -25,7 +27,7 @@ func _ready() -> void:
 		apply_mods()
 	
 	%GameTitle.text = game_data.title
-	%GameIcon.texture = ImageTexture.create_from_image(Image.load_from_file(game_data.file_path.path_join("icon.png")))
+	%GameIcon.texture = ImageTexture.create_from_image(Image.load_from_file(game_metadata.entry_path.path_join("icon.png")))
 	%GodotVersion.text %= game_data.godot_version
 	%ModsEnabled.set_pressed_no_signal(game_metadata.mods_enabled)
 
@@ -52,7 +54,7 @@ func import_mod_update() -> void:
 		return
 	
 	var mod_data := ModDescriptor.new()
-	mod_data.load_data(%ImportModPath.text.path_join("mod.cfg"))
+	mod_data.load_data(%ImportModPath.text)
 	
 	if mod_data.game != game_data.title:
 		set_import_error("Mod isn't made for \"%s\"." % game_data.title)
@@ -185,13 +187,15 @@ func toggle_mods(button_pressed: bool) -> void:
 			
 			if has == config_sections.size():
 				match game_data.godot_version:
-						"3.x":
+						"2.x", "3.x":
 							if config.get_section_keys("application").size() == 1:
 								DirAccess.remove_absolute(override_file)
 								deleted = true
 		
 		if not deleted:
 			match game_data.godot_version:
+				"2.x":
+					config.erase_section_key("application", "main_scene")
 				"3.x":
 					config.erase_section_key("application", "run/main_scene")
 			
@@ -208,10 +212,12 @@ func apply_mods():
 		config.load(override_file)
 	
 	match game_data.godot_version:
+		"2.x":
+			config.set_value("application", "main_scene", "res://GUMM_mod_loader.tscn")
 		"3.x":
 			config.set_value("application", "run/main_scene", "res://GUMM_mod_loader.tscn")
-			DirAccess.copy_absolute("res://System/3.x/GUMM_mod_loader.tscn", game_metadata.game_path.path_join("GUMM_mod_loader.tscn"))
 	
+	DirAccess.copy_absolute("res://System/%s/GUMM_mod_loader.tscn" % game_data.godot_version, game_metadata.game_path.path_join("GUMM_mod_loader.tscn"))
 	config.set_value("gumm", "main_scene", game_data.main_scene)
 	config.set_value("gumm", "mod_list", game_metadata.installed_mods.filter(func(mod): return mod.active).map(func(mod): return mod.load_path))
 	

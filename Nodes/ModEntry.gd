@@ -10,7 +10,7 @@ func set_mod(meta: Registry.GameData.ModData):
 	metadata = meta
 	
 	entry = ModDescriptor.new()
-	if not entry.load_data(metadata.load_path.path_join("mod.cfg")):
+	if not entry.load_data(metadata.load_path):
 		missing = true
 		%Name.text = "MISSING"
 		%Name.modulate = Color.RED
