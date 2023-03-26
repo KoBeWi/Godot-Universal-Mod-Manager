@@ -14,12 +14,12 @@ func replace_resource_at(target_path, resource):
 	resource.take_over_path(target_path)
 	resource_storage.append(resource)
 
-func load_texture(path):
+func load_texture(path, flags = 7):
 	var image = Image.new()
 	image.load(get_full_path(path))
 	
 	var texture = ImageTexture.new()
-	texture.create_from_image(image)
+	texture.create_from_image(image, flags)
 	
 	return texture
 
@@ -40,7 +40,7 @@ func load_mp3(path):
 	
 	var data = file.get_buffer(file.get_len())
 	
-	var stream = ClassDB.instance("AudioStreamMP3").new() # For compatibility with older Godot 3.x versions.
+	var stream = ClassDB.instance("AudioStreamMP3") # For compatibility with older Godot 3.x versions.
 	stream.data = data
 	
 	return stream

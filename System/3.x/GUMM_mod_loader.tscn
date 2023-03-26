@@ -15,10 +15,10 @@ func _ready():
 
 func load_mod(mod_path):
 	var mod_cfg = ConfigFile.new()
-	mod_cfg.load(mod_cfg.plus_file(\"mod.cfg\"))
+	mod_cfg.load(mod_path.plus_file(\"mod.cfg\"))
 	print(\"Loading mod:\", mod_cfg.get_value(\"Godot Mod\", \"name\", \"[unknown]\"))
 	
-	var mod_ref = load(mod_path.plus_file(\"mod.gd\"))
+	var mod_ref = load(mod_path.plus_file(\"mod.gd\")).new()
 	mod_ref.initialize(mod_path, get_tree())
 	loaded_mods.append(mod_ref)
 "
