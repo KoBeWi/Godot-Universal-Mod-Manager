@@ -86,7 +86,7 @@ icon = ExtResource("4_lc07v")
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a Directory"
 size = Vector2i(425, 162)
-ok_button_text = "Wybierz ten folder"
+ok_button_text = "Wybierz bieżący katalog"
 file_mode = 2
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]

@@ -25,7 +25,7 @@ func set_mod(meta: Registry.GameData.ModData):
 	%Version.text = "v.%s" % entry.version
 	%Active.set_pressed_no_signal(metadata.active)
 	
-	%OpenFolder.pressed.connect(OS.shell_open.bind(metadata.load_path))
+	%OpenFolder.pressed.connect(OS.shell_open.bind(ProjectSettings.globalize_path(metadata.load_path)))
 	
 	if FileAccess.file_exists(metadata.load_path.path_join("icon.png")):
 		var image := Image.load_from_file(metadata.load_path.path_join("icon.png"))
@@ -38,10 +38,6 @@ func toggle_active(button_pressed: bool) -> void:
 	owner.apply_mods()
 
 func try_recover(dir: String) -> void:
-	if dir.is_empty():
-		shoot_error.call_deferred("Path can't be empty.")
-		return
-	
 	if dir.is_empty():
 		shoot_error.call_deferred("Path can't be empty.")
 		return

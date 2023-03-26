@@ -29,6 +29,10 @@ func add_new_mod_entry(game: GameData, load_path: String) -> GameData.ModData:
 	save_game_entry_list()
 	return mod
 
+func remove_game_entry(game: GameData):
+	games.erase(game)
+	save_game_entry_list()
+
 func remove_mod_entry(game: GameData, mod: GameData.ModData):
 	game.installed_mods.erase(mod)
 	save_game_entry_list()

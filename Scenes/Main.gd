@@ -3,6 +3,8 @@ extends VBoxContainer
 enum {DIRECTORY_CREATE_GAME, DIRECTORY_ADD_GAME, DIRECTORY_ADD_DESCRIPTIOR}
 var directory_mode: int = -1
 
+var entry_to_delete: Control
+
 func _ready() -> void:
 	for game in Registry.games:
 		add_game_entry(game)
@@ -44,9 +46,10 @@ func import_game_entry() -> void:
 	
 	if %CopyLocal.button_pressed:
 		var entry := GameDescriptor.new()
-		entry.load_data(entry_folder)
+		entry.load_data(entry_folder.path_join("game.cfg"))
 		
-		var new_folder: String = "user://Games/" + %CreateTitle.text.validate_filename()
+		var new_folder: String = "user://Games/" + entry.title.validate_filename()
+		prints(new_folder, entry.title, entry.title.validate_filename())
 		DirAccess.make_dir_recursive_absolute(new_folder)
 		DirAccess.copy_absolute(entry_folder.path_join("game.cfg"), new_folder.path_join("game.cfg"))
 		DirAccess.copy_absolute(entry_folder.path_join("icon.png"), new_folder.path_join("icon.png"))
@@ -119,11 +122,15 @@ func create_game_entry() -> void:
 	var entry_data := Registry.add_new_game_entry(entry_path, %CreateDirectory.text.simplify_path())
 	add_game_entry(entry_data)
 
-func add_game_entry(game: Registry.GameData):
+func add_game_entry(game: Registry.GameData) -> Control:
 	var entry = preload("res://Nodes/GameEntry.tscn").instantiate()
 	%GameList.add_child(entry)
+	entry.owner = self
 	entry.set_game(game)
-	entry.button.pressed.connect(open_game.bind(game.entry_path))
+	if not entry.missing:
+		entry.button.pressed.connect(open_game.bind(game.entry_path))
+	entry.get_node(^"%Remove").pressed.connect(remove_game.bind(entry))
+	return entry
 
 func open_game(path: String):
 	get_tree().set_meta(&"current_game", path)
@@ -132,3 +139,21 @@ func open_game(path: String):
 func set_text(edit: LineEdit, text: String):
 	edit.text = text
 	edit.text_changed.emit(text)
+
+func refresh_entry(old_entry: Control):
+	var new_entry := add_game_entry(old_entry.metadata)
+	new_entry.get_parent().move_child(new_entry, old_entry.get_index())
+	old_entry.queue_free()
+
+func remove_game(entry, confirmed := false):
+	if confirmed:
+		entry = entry_to_delete
+		entry.missing = true
+	
+	if entry.missing:
+		Registry.remove_game_entry(entry.metadata)
+		entry.queue_free()
+	else:
+		entry_to_delete = entry
+		$DeleteConfirm.dialog_text = "Delete game \"%s\"?" % entry.entry.title
+		$DeleteConfirm.popup_centered()

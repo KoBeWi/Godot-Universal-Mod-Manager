@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://cby1pndqgyn3p"]
+[gd_scene load_steps=4 format=3 uid="uid://cby1pndqgyn3p"]
 
 [ext_resource type="Script" path="res://Nodes/GameEntry.gd" id="1_t476h"]
+[ext_resource type="Texture2D" uid="uid://cgdl6ls80n328" path="res://Textures/Folder.svg" id="2_2k2ec"]
+[ext_resource type="Texture2D" uid="uid://csvx51bvvwu3p" path="res://Textures/Remove.svg" id="4_c2x44"]
 
 [node name="GameEntry" type="PanelContainer"]
+offset_right = 395.0
 offset_bottom = 96.0
 script = ExtResource("1_t476h")
 
@@ -49,6 +52,37 @@ size_flags_horizontal = 3
 text = "%d mods active"
 horizontal_alignment = 1
 
+[node name="Control" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+
 [node name="Button" type="Button" parent="."]
 layout_mode = 2
 flat = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 1
+
+[node name="OpenFolder" type="Button" parent="VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Open Folder"
+icon = ExtResource("2_2k2ec")
+
+[node name="Remove" type="Button" parent="VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Delete"
+icon = ExtResource("4_c2x44")
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a Directory"
+size = Vector2i(425, 162)
+ok_button_text = "Wybierz bieżący katalog"
+file_mode = 2
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+
+[connection signal="dir_selected" from="FileDialog" to="." method="try_recover"]
