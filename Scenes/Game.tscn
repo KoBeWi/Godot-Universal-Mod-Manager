@@ -37,29 +37,34 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Game Title"
 
-[node name="HBoxContainer2" type="MarginContainer" parent="VBoxContainer2/HBoxContainer"]
+[node name="HBoxContainer2" type="VBoxContainer" parent="VBoxContainer2/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="VBoxContainer2/HBoxContainer/HBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2/HBoxContainer/HBoxContainer2"]
 layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 8
+alignment = 2
+
+[node name="Button" type="Button" parent="VBoxContainer2/HBoxContainer/HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
 text = "Open Game Directory"
 
-[node name="GodotVersion" type="Label" parent="VBoxContainer2/HBoxContainer/HBoxContainer2"]
+[node name="GodotVersion" type="Label" parent="VBoxContainer2/HBoxContainer/HBoxContainer2/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-size_flags_vertical = 0
+size_flags_vertical = 1
 text = "Godot %s"
+vertical_alignment = 1
 
-[node name="ModsEnabled" type="CheckButton" parent="VBoxContainer2/HBoxContainer"]
+[node name="ModsEnabled" type="CheckButton" parent="VBoxContainer2/HBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 0
+size_flags_vertical = 8
 theme_override_font_sizes/font_size = 30
-text = "Mods Enabled"
+text = "Enable Mods"
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer2"]
 layout_mode = 2
@@ -237,8 +242,8 @@ size_flags_horizontal = 0
 size_flags_vertical = 8
 text = "Back"
 
-[connection signal="pressed" from="VBoxContainer2/HBoxContainer/HBoxContainer2/Button" to="." method="open_game_directory"]
-[connection signal="toggled" from="VBoxContainer2/HBoxContainer/ModsEnabled" to="." method="toggle_mods"]
+[connection signal="pressed" from="VBoxContainer2/HBoxContainer/HBoxContainer2/HBoxContainer/Button" to="." method="open_game_directory"]
+[connection signal="toggled" from="VBoxContainer2/HBoxContainer/HBoxContainer2/ModsEnabled" to="." method="toggle_mods"]
 [connection signal="pressed" from="VBoxContainer2/VBoxContainer/Button" to="." method="import_mod"]
 [connection signal="pressed" from="VBoxContainer2/VBoxContainer/Button2" to="." method="create_mod"]
 [connection signal="confirmed" from="ImportModDialog" to="." method="import_mod_confirmed"]

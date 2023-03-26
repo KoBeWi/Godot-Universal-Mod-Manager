@@ -27,6 +27,13 @@ func validate_add() -> void:
 		set_add_error("Descriptor directory invalid. Missing \"game.cfg\".")
 		return
 	
+	var data := GameDescriptor.new()
+	data.load_data(%ImportPath.text)
+	for game in %GameList.get_children():
+		if game.entry.title == data.title:
+			set_add_error("Game already on the list. Delete it first.")
+			return
+	
 	if %ImportGame.text.is_empty():
 		set_add_error("Game directory name can't be empty.")
 		return
@@ -69,8 +76,12 @@ func on_create_game_entry() -> void:
 func validate_create() -> void:
 	if %CreateTitle.text.is_empty():
 		set_create_error("Title can't be empty.")
-		## TODO: unikalne
 		return
+	
+	for game in %GameList.get_children():
+		if game.entry.title == %CreateTitle.text:
+			set_create_error("Game already on the list.")
+			return
 	
 	if not %CreateIcon.text.is_empty():
 		if not %CreateIcon.text.get_extension() in Registry.ICON_FORMATS:

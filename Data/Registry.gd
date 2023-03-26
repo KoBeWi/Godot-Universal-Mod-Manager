@@ -25,6 +25,12 @@ func add_new_game_entry(entry_path: String, game_path: String) -> GameData:
 
 func add_new_mod_entry(game: GameData, load_path: String) -> GameData.ModData:
 	var mod := GameData.ModData.new({load_path = load_path, active = true})
+	
+	for mod_meta in game.installed_mods:
+		if mod_meta.entry.name == mod.entry.name:
+			mod_meta.load_path = load_path
+			return mod_meta
+	
 	game.installed_mods.append(mod)
 	save_game_entry_list()
 	return mod
@@ -51,17 +57,20 @@ class GameData:
 	class ModData:
 		var load_path: String
 		var active: bool
+		var entry: ModDescriptor
 		
 		func _init(data: Dictionary) -> void:
 			load_path = data.load_path
 			active = data.active
 			
-			if not DirAccess.dir_exists_absolute(load_path):
+			var entry = ModDescriptor.new()
+			if not entry.load_data(load_path):
 				active = false
 		
 		func get_var() -> Dictionary:
 			return {load_path = load_path, active = active}
 	
+	var entry: GameDescriptor
 	var entry_path: String
 	var game_path: String
 	var mods_enabled: bool
@@ -71,6 +80,9 @@ class GameData:
 		entry_path = data.entry_path
 		game_path = data.game_path
 		mods_enabled = FileAccess.file_exists(game_path.path_join("GUMM_mod_loader.tscn"))
+		
+		entry = GameDescriptor.new()
+		entry.load_data(entry_path)
 		
 		for mod in data.installed_mods:
 			installed_mods.append(ModData.new(mod))

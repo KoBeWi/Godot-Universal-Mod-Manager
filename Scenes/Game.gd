@@ -8,13 +8,13 @@ var entry_to_delete: Control
 
 func _ready() -> void:
 	var entry_path: String = get_tree().get_meta(&"current_game", "")
-	game_data = GameDescriptor.new()
-	game_data.load_data(entry_path)
 	
 	for meta in Registry.games:
 		if meta.entry_path == entry_path:
 			game_metadata = meta
 			break
+	
+	game_data = game_metadata.entry
 	
 	var new_missing: bool
 	for mod in game_metadata.installed_mods:
@@ -36,7 +36,6 @@ func import_mod() -> void:
 	$ImportModDialog.popup_centered()
 
 func import_mod_update() -> void:
-	## TODO: sprawdzanie, czy istnieje. Jak tak to aktualizować (i pisać wersje)
 	%ImportModName.text = ""
 	%ImportModDescription.text = ""
 	%ImportModVersion.text = ""
@@ -60,19 +59,32 @@ func import_mod_update() -> void:
 		set_import_error("Mod isn't made for \"%s\"." % game_data.title)
 		return
 	
+	set_import_error("")
+	
+	var existing := get_mod_by_name(mod_data.name)
+	if existing:
+		set_import_warning("A mod with this name already exists, with version %s. It will be replaced." % existing.entry.version)
+		entry_to_update = existing
+	
 	%ImportModName.text = mod_data.name
 	%ImportModDescription.text = mod_data.description
 	%ImportModVersion.text = mod_data.version
-	
-	set_import_error("")
 
 func set_import_error(error: String):
+	%ImportError.add_theme_color_override(&"font_color", Color.RED)
 	%ImportError.text = error
 	$ImportModDialog.get_ok_button().disabled = not error.is_empty()
 
+func set_import_warning(warning: String):
+	%ImportError.add_theme_color_override(&"font_color", Color.YELLOW)
+	%ImportError.text = warning
+
 func import_mod_confirmed() -> void:
 	var entry := Registry.add_new_mod_entry(game_metadata, %ImportModPath.text)
-	add_mod_entry(entry)
+	if entry_to_update:
+		refresh_entry(entry_to_update)
+	else:
+		add_mod_entry(entry)
 	apply_mods()
 
 func add_mod_entry(mod: Registry.GameData.ModData) -> Control:
@@ -247,6 +259,12 @@ func refresh_entry(old_entry: Control):
 
 func get_override_path() -> String:
 	return game_metadata.game_path.path_join("override.cfg")
+
+func get_mod_by_name(mod_name: String) -> Control:
+	for entry in %ModList.get_children():
+		if entry.entry.name == mod_name:
+			return entry
+	return null
 
 func go_back() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Main.tscn")
