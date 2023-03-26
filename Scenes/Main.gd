@@ -166,4 +166,5 @@ func remove_game(entry, confirmed := false):
 	else:
 		entry_to_delete = entry
 		$DeleteConfirm.dialog_text = "Delete game \"%s\"?" % entry.entry.title
+		$DeleteConfirm.reset_size()
 		$DeleteConfirm.popup_centered()

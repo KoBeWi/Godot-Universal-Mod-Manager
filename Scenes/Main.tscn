@@ -154,7 +154,7 @@ size_flags_horizontal = 3
 
 [node name="Label4" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
-text = "Main Directory Path"
+text = "Game Path"
 
 [node name="CreateDirectory" parent="CreateGame/VBoxContainer2/VBoxContainer" instance=ExtResource("4_w173i")]
 unique_name_in_owner = true

@@ -250,6 +250,7 @@ func remove_mod(entry, confirmed := false):
 	else:
 		entry_to_delete = entry
 		$DeleteConfirm.dialog_text = "Delete mod \"%s\"?" % entry.entry.name
+		$DeleteConfirm.reset_size()
 		$DeleteConfirm.popup_centered()
 
 func refresh_entry(old_entry: Control):
