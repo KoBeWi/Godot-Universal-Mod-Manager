@@ -88,6 +88,7 @@ title = "Open a Directory"
 size = Vector2i(425, 162)
 ok_button_text = "Wybierz bieżący katalog"
 file_mode = 2
+access = 2
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 
