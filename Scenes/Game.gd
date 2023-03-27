@@ -32,6 +32,7 @@ func _ready() -> void:
 	%ModsEnabled.set_pressed_no_signal(game_metadata.mods_enabled)
 
 func import_mod() -> void:
+	%ImportModPath.text = ""
 	import_mod_update()
 	$ImportModDialog.popup_centered()
 

@@ -63,7 +63,7 @@ class GameData:
 			load_path = data.load_path
 			active = data.active
 			
-			var entry = ModDescriptor.new()
+			entry = ModDescriptor.new()
 			if not entry.load_data(load_path):
 				active = false
 		
