@@ -1,6 +1,7 @@
 extends "GUMM_mod.gd"
 
 func _initialize(scene_tree):
+	# Simply replace some resources, nothing special.
 	replace_resource_at("res://assets/player/laser.png", load_texture("mod://Textures/laser.png", 0))
 	replace_resource_at("res://assets/player/player-sit.png", load_texture("mod://Textures/player-sit.png", 0))
 	replace_resource_at("res://assets/player/player-dead.png", load_texture("mod://Textures/player-dead.png, 0"))

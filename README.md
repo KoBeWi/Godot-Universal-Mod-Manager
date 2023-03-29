@@ -136,4 +136,4 @@ func _initialize(scene_tree: SceneTree) -> void:
 
 ## Examples
 
-GUMM comes with example mods for 3 games: Lumencraft, Spooky Ghosts Dot Com, Blastronaut Demo (note that the first 2 are commercial games, so you need to own them to see the mods in action). Their game entries are located in GameInfo directory. You can use these mods as a reference on how your mods can work. Note that the examples don't use any *advanced modding techniques* (like node injecting or replacing scripts etc.).
+GUMM comes with example mods for 3 games: Lumencraft, Spooky Ghosts Dot Com, Blastronaut Demo (note that the first 2 are commercial games, so you need to own them to see the mods in action). Their game entries are located in GameInfo directory. You can use these mods as a reference on how your mods can work and take note of some *advanced modding techniques* (like manual file copying).
