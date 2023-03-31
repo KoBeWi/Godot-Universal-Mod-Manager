@@ -16,7 +16,7 @@ func _ready():
 func load_mod(mod_path: String):
 	var mod_cfg := ConfigFile.new()
 	mod_cfg.load(mod_path.path_join(\"mod.cfg\"))
-	print(\"Loading mod:\", mod_cfg.get_value(\"Godot Mod\", \"name\", \"[unknown]\"))
+	print(\"Loading mod: \", mod_cfg.get_value(\"Godot Mod\", \"name\", \"[unknown]\"))
 	
 	var mod_ref: RefCounted = load(mod_path.path_join(\"mod.gd\")).new()
 	mod_ref.initialize(mod_path, get_tree())

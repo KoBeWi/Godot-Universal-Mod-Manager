@@ -1,6 +1,0 @@
-override.cfg zależne od wersji
-każdy mod z cfg z nazwą, pliki używają względnych ścieżek
-może nie przechowywać modów w plikach gry? tylko injectować ścieżkę do zewnętrznej listy
-plik txt z mapą tytuł -> ścieżka gry, i pewnie to samo z modami
-wczytywanie modów z zip
-w Registry: czy mody włączone; zainstalowane mody (ścieżki); które mody są włączone

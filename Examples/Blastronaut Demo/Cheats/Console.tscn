@@ -1,0 +1,106 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends CanvasLayer
+
+var infinite_health = false
+var infinite_fuel = false
+var infinite_money = false
+
+var hud
+
+func _ready() -> void:
+	$PanelContainer.hide()
+	# Connect to health changed signal to heal immediately.
+	Globals.connect(\"onHealthChanged\", self, \"onHealthChanged\")
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if event.pressed and event.scancode == KEY_QUOTELEFT:
+			# Toggle console.
+			$PanelContainer.visible = not $PanelContainer.visible
+
+func recover() -> void:
+	# Recover button is pressed. Look for the node we marked before.
+	var backpacks = get_tree().get_nodes_in_group(\"gumm_backpack\")
+	if not backpacks.empty():
+		# If exists, change its state to collected.
+		backpacks[0].state = 2
+
+# Toggle infinite cheats with checkboxes.
+func _on_CheckBox_toggled(button_pressed: bool) -> void:
+	infinite_health = button_pressed
+
+func _on_CheckBox2_toggled(button_pressed: bool) -> void:
+	infinite_fuel = button_pressed
+
+func _on_CheckBox3_toggled(button_pressed: bool) -> void:
+	infinite_money = button_pressed
+
+func onHealthChanged(h):
+	if infinite_health:
+		# Set health to max when changed, making it infinite.
+		Globals.health = Globals.maxhealth
+
+# This runs once per second. It's useless optimization, it could run once per frame (in _process()).
+func cheat() -> void:
+	if infinite_fuel:
+		# Set fuel to max.
+		Globals.fuel = Globals.maxfuel
+	
+	if infinite_money:
+		# Set money to 99999. It's not infinite, but allows you to buy all basic upgrades.
+		var money = Globals.items.get(Globals.TileType.MONEY)
+		if money:
+			money.count = 99999
+		else:
+			hud.add_item(Globals.TileType.MONEY, 99999)
+"
+
+[node name="Console" type="CanvasLayer"]
+layer = 128
+script = SubResource( 1 )
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = 8.0
+margin_top = 128.0
+margin_right = 158.0
+margin_bottom = 246.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 143.0
+margin_bottom = 111.0
+
+[node name="CheckBox" type="CheckBox" parent="PanelContainer/VBoxContainer"]
+margin_right = 136.0
+margin_bottom = 24.0
+text = "Infinite Health"
+
+[node name="CheckBox2" type="CheckBox" parent="PanelContainer/VBoxContainer"]
+margin_top = 28.0
+margin_right = 136.0
+margin_bottom = 52.0
+text = "Infinite Fuel"
+
+[node name="CheckBox3" type="CheckBox" parent="PanelContainer/VBoxContainer"]
+margin_top = 56.0
+margin_right = 136.0
+margin_bottom = 80.0
+text = "Infinite Money"
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer"]
+margin_top = 84.0
+margin_right = 136.0
+margin_bottom = 104.0
+text = "Recover Lost Items"
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="toggled" from="PanelContainer/VBoxContainer/CheckBox" to="." method="_on_CheckBox_toggled"]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/CheckBox2" to="." method="_on_CheckBox2_toggled"]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/CheckBox3" to="." method="_on_CheckBox3_toggled"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Button" to="." method="recover"]
+[connection signal="timeout" from="Timer" to="." method="cheat"]

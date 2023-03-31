@@ -13,8 +13,7 @@ With this, you can override the main scene and inject/replace any resource in th
 ### Caveats
 
 There are a few things that make modding this way difficult or impossible:
-- you can't really debug a mod, especially if the game is exported in release mode (which most games do)
-- if the game uses a custom engine build, you can't even rely on the official Godot editor
+- debugging a mod is difficult, especially if the game uses a modified Godot build
 - in worst case, the game has no GDScript module, which makes this manager useless
 - the files can also be encrypted, making it more difficult to tinker with them
 - `take_over_path()` will not work when resources are loaded without cache (which is unlikely, but possible)
@@ -134,6 +133,14 @@ func _initialize(scene_tree: SceneTree) -> void:
     Globals.add_level("res://NewLevel.tscn")
 ```
 
+### No Modding API
+
+If the developer does not provide any modding API, you are on your own. Unless the game is protected, it's easy to unpack and decompile the scripts. Once you unpack the project, you can run it using your own Godot executable, which makes testing much easier. Opening the project in editor is more difficult, as the source assets need to be extracted first.
+
+Keep in mind that, unless the project is open-source (which makes hacky modding pointless tbh), all assets are copyrighted. While personal use for modding purposes is *probably ok*, make sure your mods don't infringe the copyright by e.g. sharing some assets.
+
 ## Examples
 
-GUMM comes with example mods for 3 games: Lumencraft, Spooky Ghosts Dot Com, Blastronaut Demo (note that the first 2 are commercial games, so you need to own them to see the mods in action). Their game entries are located in GameInfo directory. You can use these mods as a reference on how your mods can work and take note of some *advanced modding techniques* (like manual file copying).
+GUMM comes with example mods for 3 games: Lumencraft, Spooky Ghosts Dot Com, Blastronaut Demo. Lumencraft has a free demo (mod-compatible), but Spooky Ghosts requires you to own the game if you want to see the mod in action.
+
+The game entries are located in GameInfo directory. You can use these mods as a reference on how your mods can work and take note of some *advanced modding techniques* (like manual file copying or node injection).
