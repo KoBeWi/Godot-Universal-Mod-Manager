@@ -263,3 +263,6 @@ class AutoExportVersionExporter extends EditorExportPlugin:
 		
 		var version: String = plugin.get_version(features, is_debug, path, flags)
 		plugin.store_version(version, plugin.STORE_LOCATION)
+	
+	func _get_name() -> String:
+		return "AEVE"
