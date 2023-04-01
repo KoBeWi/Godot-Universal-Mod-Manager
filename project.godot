@@ -36,6 +36,10 @@ gdscript/warnings/confusable_identifier=0
 
 window/subwindows/embed_subwindows=false
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/AutoExportVersion/plugin.cfg")
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

@@ -1,8 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://jykr2g2kil0d"]
+[gd_scene load_steps=5 format=3 uid="uid://jykr2g2kil0d"]
 
 [ext_resource type="Script" path="res://Scenes/Main.gd" id="1_tstig"]
 [ext_resource type="Texture2D" uid="uid://s0pfm6agi7gy" path="res://Textures/Add.svg" id="1_ypae8"]
 [ext_resource type="PackedScene" uid="uid://o4ix83ajmoe2" path="res://Nodes/PathEdit.tscn" id="4_w173i"]
+
+[sub_resource type="GDScript" id="GDScript_llbit"]
+script/source = "extends Label
+
+func _ready() -> void:
+	text += preload(\"res://version.gd\").VERSION
+"
 
 [node name="Main" type="VBoxContainer"]
 anchors_preset = 15
@@ -14,6 +21,26 @@ alignment = 1
 script = ExtResource("1_tstig")
 metadata/_edit_vertical_guides_ = []
 metadata/_edit_lock_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 2
+alignment = 1
+
+[node name="Label2" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "GUMM"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 20
+text = "v."
+horizontal_alignment = 1
+script = SubResource("GDScript_llbit")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
@@ -43,6 +70,10 @@ theme_override_font_sizes/font_size = 40
 text = "Create Game Entry"
 icon = ExtResource("1_ypae8")
 expand_icon = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="AddGame" type="AcceptDialog" parent="."]
 unique_name_in_owner = true
