@@ -128,9 +128,9 @@ Feature-dependent methods:
 While GUMM does not require any modding support provided by the game, adding one would make modders' life easier. If you want to provide a modding API compatible with GUMM, all it requires is adding some methods available from a singleton. Provide this information to modders and they will be able to call these methods from the `mod.gd` file. For example:
 ```GDScript
 func _initialize(scene_tree: SceneTree) -> void:
-    var level = load_resource("mod://Level1.tscn")
+	var level = load_resource("mod://Level1.tscn")
 	replace_resource_at("res://NewLevel.tscn", level)
-    Globals.add_level("res://NewLevel.tscn")
+	Globals.add_level("res://NewLevel.tscn")
 ```
 
 ### No Modding API
