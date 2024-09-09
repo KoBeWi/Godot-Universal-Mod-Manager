@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://csotwr1d3ubkw"]
+[gd_scene load_steps=5 format=3 uid="uid://csotwr1d3ubkw"]
 
 [ext_resource type="Script" path="res://Scenes/Game.gd" id="1_a8a8g"]
 [ext_resource type="Texture2D" uid="uid://s0pfm6agi7gy" path="res://Textures/Add.svg" id="1_vji8i"]
 [ext_resource type="PackedScene" uid="uid://o4ix83ajmoe2" path="res://Nodes/PathEdit.tscn" id="3_s7q5b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2d34u"]
 
 [node name="Game" type="MarginContainer"]
 anchors_preset = 15
@@ -92,7 +94,7 @@ expand_icon = true
 
 [node name="ImportModDialog" type="ConfirmationDialog" parent="."]
 title = "Import Mod"
-position = Vector2i(-800, 600)
+position = Vector2i(0, 184)
 size = Vector2i(600, 248)
 min_size = Vector2i(600, 200)
 
@@ -135,6 +137,7 @@ text = "Description"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_2d34u")
 editable = false
 
 [node name="Label3" type="Label" parent="ImportModDialog/VBoxContainer/GridContainer"]
