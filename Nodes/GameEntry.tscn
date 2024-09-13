@@ -83,6 +83,7 @@ size = Vector2i(425, 175)
 ok_button_text = "Select Current Folder"
 file_mode = 2
 access = 2
+use_native_dialog = true
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 

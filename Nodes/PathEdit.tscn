@@ -21,6 +21,7 @@ exclusive = false
 ok_button_text = "Select Current Folder"
 file_mode = 2
 access = 2
+use_native_dialog = true
 
 [connection signal="text_changed" from="LineEdit" to="." method="line_edit_text_changed" unbinds=1]
 [connection signal="pressed" from="Button" to="." method="browse"]
