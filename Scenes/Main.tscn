@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://jykr2g2kil0d"]
+[gd_scene format=3 uid="uid://jykr2g2kil0d"]
 
-[ext_resource type="Script" path="res://Scenes/Main.gd" id="1_tstig"]
+[ext_resource type="Script" uid="uid://b5itjp6uikunr" path="res://Scenes/Main.gd" id="1_tstig"]
 [ext_resource type="Texture2D" uid="uid://s0pfm6agi7gy" path="res://Textures/Add.svg" id="1_ypae8"]
 [ext_resource type="PackedScene" uid="uid://o4ix83ajmoe2" path="res://Nodes/PathEdit.tscn" id="4_w173i"]
 
@@ -11,7 +11,7 @@ func _ready() -> void:
 	text += preload(\"res://version.gd\").VERSION
 "
 
-[node name="Main" type="VBoxContainer"]
+[node name="Main" type="VBoxContainer" unique_id=1922640151]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -22,19 +22,19 @@ script = ExtResource("1_tstig")
 metadata/_edit_vertical_guides_ = []
 metadata/_edit_lock_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=196165404]
 layout_mode = 2
 size_flags_vertical = 2
 alignment = 1
 
-[node name="Label2" type="Label" parent="HBoxContainer"]
+[node name="Label2" type="Label" parent="HBoxContainer" unique_id=700943249]
 layout_mode = 2
 size_flags_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "GUMM"
 horizontal_alignment = 1
 
-[node name="Label3" type="Label" parent="HBoxContainer"]
+[node name="Label3" type="Label" parent="HBoxContainer" unique_id=723857745]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_font_sizes/font_size = 20
@@ -42,162 +42,163 @@ text = "v."
 horizontal_alignment = 1
 script = SubResource("GDScript_llbit")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=981813814]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Game List"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=762975381]
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="GameList" type="VBoxContainer" parent="VBoxContainer"]
+[node name="GameList" type="VBoxContainer" parent="VBoxContainer" unique_id=10053048]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=626237096]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Import Game"
 icon = ExtResource("1_ypae8")
 expand_icon = true
 
-[node name="Button2" type="Button" parent="VBoxContainer"]
+[node name="Button2" type="Button" parent="VBoxContainer" unique_id=1526226144]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Create Game Entry"
 icon = ExtResource("1_ypae8")
 expand_icon = true
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=340104360]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="AddGame" type="AcceptDialog" parent="."]
+[node name="AddGame" type="AcceptDialog" parent="." unique_id=1983184801]
 unique_name_in_owner = true
 title = "Add Game Entry"
 size = Vector2i(616, 180)
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="AddGame"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="AddGame" unique_id=891772052]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 608.0
 offset_bottom = 131.0
 
-[node name="VBoxContainer" type="GridContainer" parent="AddGame/VBoxContainer2"]
+[node name="VBoxContainer" type="GridContainer" parent="AddGame/VBoxContainer2" unique_id=769106290]
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 columns = 2
 
-[node name="Label" type="Label" parent="AddGame/VBoxContainer2/VBoxContainer"]
+[node name="Label" type="Label" parent="AddGame/VBoxContainer2/VBoxContainer" unique_id=1272603265]
 layout_mode = 2
 text = "Descriptor Path"
 
-[node name="ImportPath" parent="AddGame/VBoxContainer2/VBoxContainer" instance=ExtResource("4_w173i")]
+[node name="ImportPath" parent="AddGame/VBoxContainer2/VBoxContainer" unique_id=341026586 instance=ExtResource("4_w173i")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label5" type="Label" parent="AddGame/VBoxContainer2/VBoxContainer"]
+[node name="Label5" type="Label" parent="AddGame/VBoxContainer2/VBoxContainer" unique_id=1675618108]
 layout_mode = 2
 text = "Game Path"
 
-[node name="ImportGame" parent="AddGame/VBoxContainer2/VBoxContainer" instance=ExtResource("4_w173i")]
+[node name="ImportGame" parent="AddGame/VBoxContainer2/VBoxContainer" unique_id=2069595765 instance=ExtResource("4_w173i")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Control" type="Control" parent="AddGame/VBoxContainer2/VBoxContainer"]
+[node name="Control" type="Control" parent="AddGame/VBoxContainer2/VBoxContainer" unique_id=1269508499]
 layout_mode = 2
 
-[node name="CopyLocal" type="CheckBox" parent="AddGame/VBoxContainer2/VBoxContainer"]
+[node name="CopyLocal" type="CheckBox" parent="AddGame/VBoxContainer2/VBoxContainer" unique_id=875318756]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Copy Descriptor?"
 
-[node name="AddError" type="Label" parent="AddGame/VBoxContainer2"]
+[node name="AddError" type="Label" parent="AddGame/VBoxContainer2" unique_id=182760093]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="CreateGame" type="AcceptDialog" parent="."]
+[node name="CreateGame" type="AcceptDialog" parent="." unique_id=551417591]
 title = "Create Game Entry"
 size = Vector2i(616, 357)
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="CreateGame"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="CreateGame" unique_id=1843877479]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 608.0
 offset_bottom = 308.0
 
-[node name="VBoxContainer" type="GridContainer" parent="CreateGame/VBoxContainer2"]
+[node name="VBoxContainer" type="GridContainer" parent="CreateGame/VBoxContainer2" unique_id=1024030539]
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 columns = 2
 
-[node name="Label" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+[node name="Label" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer" unique_id=1098245349]
 layout_mode = 2
 text = "Game Title"
 
-[node name="CreateTitle" type="LineEdit" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+[node name="CreateTitle" type="LineEdit" parent="CreateGame/VBoxContainer2/VBoxContainer" unique_id=1397040778]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label5" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+[node name="Label5" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer" unique_id=1603599483]
 layout_mode = 2
 text = "Icon"
 
-[node name="CreateIcon" parent="CreateGame/VBoxContainer2/VBoxContainer" instance=ExtResource("4_w173i")]
+[node name="CreateIcon" parent="CreateGame/VBoxContainer2/VBoxContainer" unique_id=1634964285 instance=ExtResource("4_w173i")]
 unique_name_in_owner = true
 layout_mode = 2
 mode = 1
 
-[node name="Label2" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+[node name="Label2" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer" unique_id=1753231365]
 layout_mode = 2
 text = "Godot Version"
 
-[node name="CreateVersion" type="OptionButton" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+[node name="CreateVersion" type="OptionButton" parent="CreateGame/VBoxContainer2/VBoxContainer" unique_id=2110921309]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 selected = 2
 item_count = 3
 popup/item_0/text = "2.x"
+popup/item_0/id = 0
 popup/item_1/text = "3.x"
 popup/item_1/id = 1
 popup/item_2/text = "4.x"
 popup/item_2/id = 2
 
-[node name="Label3" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+[node name="Label3" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer" unique_id=366627216]
 layout_mode = 2
 text = "Main Scene"
 
-[node name="CreateScene" type="LineEdit" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+[node name="CreateScene" type="LineEdit" parent="CreateGame/VBoxContainer2/VBoxContainer" unique_id=2100081534]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label4" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer"]
+[node name="Label4" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer" unique_id=1071678360]
 layout_mode = 2
 text = "Game Path"
 
-[node name="CreateDirectory" parent="CreateGame/VBoxContainer2/VBoxContainer" instance=ExtResource("4_w173i")]
+[node name="CreateDirectory" parent="CreateGame/VBoxContainer2/VBoxContainer" unique_id=1283623693 instance=ExtResource("4_w173i")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="CreateError" type="Label" parent="CreateGame/VBoxContainer2"]
+[node name="CreateError" type="Label" parent="CreateGame/VBoxContainer2" unique_id=1836954532]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="DeleteConfirm" type="ConfirmationDialog" parent="."]
+[node name="DeleteConfirm" type="ConfirmationDialog" parent="." unique_id=774866889]
 
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="on_add_game_entry"]
 [connection signal="pressed" from="VBoxContainer/Button2" to="." method="on_create_game_entry"]

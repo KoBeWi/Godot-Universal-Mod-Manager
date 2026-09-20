@@ -1,12 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://csotwr1d3ubkw"]
+[gd_scene format=3 uid="uid://csotwr1d3ubkw"]
 
-[ext_resource type="Script" path="res://Scenes/Game.gd" id="1_a8a8g"]
+[ext_resource type="Script" uid="uid://gl1uvs0kc8ub" path="res://Scenes/Game.gd" id="1_a8a8g"]
 [ext_resource type="Texture2D" uid="uid://s0pfm6agi7gy" path="res://Textures/Add.svg" id="1_vji8i"]
 [ext_resource type="PackedScene" uid="uid://o4ix83ajmoe2" path="res://Nodes/PathEdit.tscn" id="3_s7q5b"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2d34u"]
 
-[node name="Game" type="MarginContainer"]
+[node name="Game" type="MarginContainer" unique_id=1942285232]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -15,30 +15,30 @@ grow_vertical = 2
 script = ExtResource("1_a8a8g")
 metadata/_edit_lock_ = true
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+[node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=929610495]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2" unique_id=485498492]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2/HBoxContainer" unique_id=42214002]
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="GameIcon" type="TextureRect" parent="VBoxContainer2/HBoxContainer/HBoxContainer"]
+[node name="GameIcon" type="TextureRect" parent="VBoxContainer2/HBoxContainer/HBoxContainer" unique_id=820677100]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="GameTitle" type="Label" parent="VBoxContainer2/HBoxContainer/HBoxContainer"]
+[node name="GameTitle" type="Label" parent="VBoxContainer2/HBoxContainer/HBoxContainer" unique_id=1036384449]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Game Title"
 
-[node name="GodotVersion" type="Label" parent="VBoxContainer2/HBoxContainer"]
+[node name="GodotVersion" type="Label" parent="VBoxContainer2/HBoxContainer" unique_id=1327656049]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
@@ -46,27 +46,27 @@ size_flags_vertical = 8
 text = "Godot %s"
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="VBoxContainer2/HBoxContainer"]
+[node name="Button" type="Button" parent="VBoxContainer2/HBoxContainer" unique_id=650633231]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 8
 text = "Open Game Directory"
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer2"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer2" unique_id=710533268]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer2"]
+[node name="Label" type="Label" parent="VBoxContainer2" unique_id=1913660827]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Mod List"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2" unique_id=956476620]
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="ModsEnabled" type="CheckButton" parent="VBoxContainer2/VBoxContainer"]
+[node name="ModsEnabled" type="CheckButton" parent="VBoxContainer2/VBoxContainer" unique_id=186434944]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -74,54 +74,54 @@ size_flags_vertical = 8
 theme_override_font_sizes/font_size = 30
 text = "Enable Mods"
 
-[node name="ModList" type="VBoxContainer" parent="VBoxContainer2/VBoxContainer"]
+[node name="ModList" type="VBoxContainer" parent="VBoxContainer2/VBoxContainer" unique_id=506642309]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Button" type="Button" parent="VBoxContainer2/VBoxContainer"]
+[node name="Button" type="Button" parent="VBoxContainer2/VBoxContainer" unique_id=1321637879]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Import Mod"
 icon = ExtResource("1_vji8i")
 expand_icon = true
 
-[node name="Button2" type="Button" parent="VBoxContainer2/VBoxContainer"]
+[node name="Button2" type="Button" parent="VBoxContainer2/VBoxContainer" unique_id=339636608]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Create Mod"
 icon = ExtResource("1_vji8i")
 expand_icon = true
 
-[node name="ImportModDialog" type="ConfirmationDialog" parent="."]
+[node name="ImportModDialog" type="ConfirmationDialog" parent="." unique_id=229334982]
 title = "Import Mod"
 position = Vector2i(0, 184)
 size = Vector2i(600, 248)
 min_size = Vector2i(600, 200)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ImportModDialog"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ImportModDialog" unique_id=1678955294]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 592.0
 offset_bottom = 199.0
 
-[node name="GridContainer" type="GridContainer" parent="ImportModDialog/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="ImportModDialog/VBoxContainer" unique_id=1625489566]
 layout_mode = 2
 theme_override_constants/h_separation = 30
 columns = 2
 
-[node name="Label" type="Label" parent="ImportModDialog/VBoxContainer/GridContainer"]
+[node name="Label" type="Label" parent="ImportModDialog/VBoxContainer/GridContainer" unique_id=1924456802]
 layout_mode = 2
 text = "Path"
 
-[node name="ImportModPath" parent="ImportModDialog/VBoxContainer/GridContainer" instance=ExtResource("3_s7q5b")]
+[node name="ImportModPath" parent="ImportModDialog/VBoxContainer/GridContainer" unique_id=125699945 instance=ExtResource("3_s7q5b")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label4" type="Label" parent="ImportModDialog/VBoxContainer/GridContainer"]
+[node name="Label4" type="Label" parent="ImportModDialog/VBoxContainer/GridContainer" unique_id=27577080]
 layout_mode = 2
 text = "Name"
 
-[node name="ImportModName" type="LineEdit" parent="ImportModDialog/VBoxContainer/GridContainer"]
+[node name="ImportModName" type="LineEdit" parent="ImportModDialog/VBoxContainer/GridContainer" unique_id=1863563234]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -129,22 +129,22 @@ editable = false
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="Label2" type="Label" parent="ImportModDialog/VBoxContainer/GridContainer"]
+[node name="Label2" type="Label" parent="ImportModDialog/VBoxContainer/GridContainer" unique_id=462745245]
 layout_mode = 2
 text = "Description"
 
-[node name="ImportModDescription" type="TextEdit" parent="ImportModDialog/VBoxContainer/GridContainer"]
+[node name="ImportModDescription" type="TextEdit" parent="ImportModDialog/VBoxContainer/GridContainer" unique_id=1997709169]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_2d34u")
 editable = false
 
-[node name="Label3" type="Label" parent="ImportModDialog/VBoxContainer/GridContainer"]
+[node name="Label3" type="Label" parent="ImportModDialog/VBoxContainer/GridContainer" unique_id=1279318226]
 layout_mode = 2
 text = "Version"
 
-[node name="ImportModVersion" type="LineEdit" parent="ImportModDialog/VBoxContainer/GridContainer"]
+[node name="ImportModVersion" type="LineEdit" parent="ImportModDialog/VBoxContainer/GridContainer" unique_id=2102613043]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -152,86 +152,86 @@ editable = false
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="ImportError" type="Label" parent="ImportModDialog/VBoxContainer"]
+[node name="ImportError" type="Label" parent="ImportModDialog/VBoxContainer" unique_id=1713907426]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 horizontal_alignment = 1
 
-[node name="NewModDialog" type="ConfirmationDialog" parent="."]
+[node name="NewModDialog" type="ConfirmationDialog" parent="." unique_id=1973157961]
 title = "Create Mod"
 position = Vector2i(-800, 600)
 size = Vector2i(600, 280)
 min_size = Vector2i(600, 200)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="NewModDialog"]
+[node name="VBoxContainer" type="VBoxContainer" parent="NewModDialog" unique_id=1287722484]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 592.0
 offset_bottom = 231.0
 
-[node name="GridContainer" type="GridContainer" parent="NewModDialog/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="NewModDialog/VBoxContainer" unique_id=1928210345]
 layout_mode = 2
 theme_override_constants/h_separation = 30
 columns = 2
 
-[node name="Label" type="Label" parent="NewModDialog/VBoxContainer/GridContainer"]
+[node name="Label" type="Label" parent="NewModDialog/VBoxContainer/GridContainer" unique_id=672678708]
 layout_mode = 2
 text = "Path"
 
-[node name="NewModPath" parent="NewModDialog/VBoxContainer/GridContainer" instance=ExtResource("3_s7q5b")]
+[node name="NewModPath" parent="NewModDialog/VBoxContainer/GridContainer" unique_id=362487492 instance=ExtResource("3_s7q5b")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label5" type="Label" parent="NewModDialog/VBoxContainer/GridContainer"]
+[node name="Label5" type="Label" parent="NewModDialog/VBoxContainer/GridContainer" unique_id=576328932]
 layout_mode = 2
 text = "Icon Path"
 
-[node name="IconPath" parent="NewModDialog/VBoxContainer/GridContainer" instance=ExtResource("3_s7q5b")]
+[node name="IconPath" parent="NewModDialog/VBoxContainer/GridContainer" unique_id=1081658777 instance=ExtResource("3_s7q5b")]
 unique_name_in_owner = true
 layout_mode = 2
 mode = 1
 
-[node name="Label4" type="Label" parent="NewModDialog/VBoxContainer/GridContainer"]
+[node name="Label4" type="Label" parent="NewModDialog/VBoxContainer/GridContainer" unique_id=1252401351]
 layout_mode = 2
 text = "Name"
 
-[node name="NewModName" type="LineEdit" parent="NewModDialog/VBoxContainer/GridContainer"]
+[node name="NewModName" type="LineEdit" parent="NewModDialog/VBoxContainer/GridContainer" unique_id=1863779571]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="Label2" type="Label" parent="NewModDialog/VBoxContainer/GridContainer"]
+[node name="Label2" type="Label" parent="NewModDialog/VBoxContainer/GridContainer" unique_id=1667087257]
 layout_mode = 2
 text = "Description"
 
-[node name="NewModDescription" type="TextEdit" parent="NewModDialog/VBoxContainer/GridContainer"]
+[node name="NewModDescription" type="TextEdit" parent="NewModDialog/VBoxContainer/GridContainer" unique_id=2068418212]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="NewModDialog/VBoxContainer/GridContainer"]
+[node name="Label3" type="Label" parent="NewModDialog/VBoxContainer/GridContainer" unique_id=1407031663]
 layout_mode = 2
 text = "Version"
 
-[node name="NewModVersion" type="LineEdit" parent="NewModDialog/VBoxContainer/GridContainer"]
+[node name="NewModVersion" type="LineEdit" parent="NewModDialog/VBoxContainer/GridContainer" unique_id=1377467980]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="NewModError" type="Label" parent="NewModDialog/VBoxContainer"]
+[node name="NewModError" type="Label" parent="NewModDialog/VBoxContainer" unique_id=1608977903]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 horizontal_alignment = 1
 
-[node name="DeleteConfirm" type="ConfirmationDialog" parent="."]
+[node name="DeleteConfirm" type="ConfirmationDialog" parent="." unique_id=1945538511]
 
-[node name="Button" type="Button" parent="."]
+[node name="Button" type="Button" parent="." unique_id=1355154794]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8

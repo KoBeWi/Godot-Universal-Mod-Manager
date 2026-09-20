@@ -1,20 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://o4ix83ajmoe2"]
+[gd_scene format=3 uid="uid://o4ix83ajmoe2"]
 
 [ext_resource type="Texture2D" uid="uid://cgdl6ls80n328" path="res://Textures/Folder.svg" id="1_0prn2"]
-[ext_resource type="Script" path="res://Nodes/PathEdit.gd" id="1_4nfpy"]
+[ext_resource type="Script" uid="uid://big2g4ver1sue" path="res://Nodes/PathEdit.gd" id="1_4nfpy"]
 
-[node name="PathEdit" type="HBoxContainer"]
+[node name="PathEdit" type="HBoxContainer" unique_id=1410600750]
 script = ExtResource("1_4nfpy")
 
-[node name="LineEdit" type="LineEdit" parent="."]
+[node name="LineEdit" type="LineEdit" parent="." unique_id=1960883199]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="."]
+[node name="Button" type="Button" parent="." unique_id=1912522075]
 layout_mode = 2
 icon = ExtResource("1_0prn2")
 
-[node name="FileDialog" type="FileDialog" parent="."]
+[node name="FileDialog" type="FileDialog" parent="." unique_id=395051251]
 title = "Open a Directory"
 size = Vector2i(452, 175)
 exclusive = false

@@ -1,37 +1,37 @@
-[gd_scene load_steps=5 format=3 uid="uid://btmccox413xng"]
+[gd_scene format=3 uid="uid://btmccox413xng"]
 
-[ext_resource type="Script" path="res://Nodes/ModEntry.gd" id="1_nu3s4"]
+[ext_resource type="Script" uid="uid://1nfdcmhrtkvs" path="res://Nodes/ModEntry.gd" id="1_nu3s4"]
 [ext_resource type="Texture2D" uid="uid://cgdl6ls80n328" path="res://Textures/Folder.svg" id="2_oeaff"]
 [ext_resource type="Texture2D" uid="uid://bmn2i4nakuceh" path="res://Textures/Edit.svg" id="3_ehfl0"]
 [ext_resource type="Texture2D" uid="uid://csvx51bvvwu3p" path="res://Textures/Remove.svg" id="4_lc07v"]
 
-[node name="ModEntry" type="PanelContainer"]
+[node name="ModEntry" type="PanelContainer" unique_id=742212219]
 offset_right = 330.0
 offset_bottom = 96.0
 script = ExtResource("1_nu3s4")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1997287116]
 layout_mode = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer" unique_id=654774019]
 custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 
-[node name="Icon" type="TextureRect" parent="HBoxContainer/CenterContainer"]
+[node name="Icon" type="TextureRect" parent="HBoxContainer/CenterContainer" unique_id=697259843]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=2109642979]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer" unique_id=1176664428]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Name" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1818856326]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -39,51 +39,51 @@ theme_override_font_sizes/font_size = 30
 text = "Mod Name"
 text_overrun_behavior = 1
 
-[node name="Version" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Version" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=881333513]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 horizontal_alignment = 2
 
-[node name="VSeparator" type="VSeparator" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1275364867]
 layout_mode = 2
 
-[node name="Active" type="CheckButton" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Active" type="CheckButton" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1644242552]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Active"
 
-[node name="Description" type="Label" parent="HBoxContainer/VBoxContainer"]
+[node name="Description" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=995916403]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 text = "Description"
 autowrap_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer" unique_id=739708027]
 layout_mode = 2
 alignment = 1
 
-[node name="OpenFolder" type="Button" parent="HBoxContainer/VBoxContainer2"]
+[node name="OpenFolder" type="Button" parent="HBoxContainer/VBoxContainer2" unique_id=928178435]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Open Folder"
 icon = ExtResource("2_oeaff")
 
-[node name="Edit" type="Button" parent="HBoxContainer/VBoxContainer2"]
+[node name="Edit" type="Button" parent="HBoxContainer/VBoxContainer2" unique_id=534784233]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Edit"
 icon = ExtResource("3_ehfl0")
 
-[node name="Remove" type="Button" parent="HBoxContainer/VBoxContainer2"]
+[node name="Remove" type="Button" parent="HBoxContainer/VBoxContainer2" unique_id=1616176273]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Delete"
 icon = ExtResource("4_lc07v")
 
-[node name="FileDialog" type="FileDialog" parent="."]
+[node name="FileDialog" type="FileDialog" parent="." unique_id=1392688876]
 title = "Open a Directory"
 size = Vector2i(425, 175)
 ok_button_text = "Select Current Folder"
@@ -91,7 +91,7 @@ file_mode = 2
 access = 2
 use_native_dialog = true
 
-[node name="AcceptDialog" type="AcceptDialog" parent="."]
+[node name="AcceptDialog" type="AcceptDialog" parent="." unique_id=367073851]
 
 [connection signal="toggled" from="HBoxContainer/VBoxContainer/HBoxContainer/Active" to="." method="toggle_active"]
 [connection signal="dir_selected" from="FileDialog" to="." method="try_recover"]

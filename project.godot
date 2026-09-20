@@ -13,7 +13,7 @@ config_version=5
 config/name="Godot Universal Mod Manager"
 config/tags=PackedStringArray("tool")
 run/main_scene="res://Scenes/Main.tscn"
-config/features=PackedStringArray("4.3")
+config/features=PackedStringArray("4.8")
 run/low_processor_mode=true
 
 [autoload]
