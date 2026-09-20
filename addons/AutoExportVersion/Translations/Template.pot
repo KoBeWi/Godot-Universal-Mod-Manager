@@ -1,0 +1,26 @@
+# LANGUAGE translation for  for the following files:
+# res://addons/AutoExportVersion/AutoExportVersion.gd
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8-bit\n"
+
+#: addons/AutoExportVersion/AutoExportVersion.gd:72
+msgid "Current version: {version}"
+msgstr ""
+
+#: addons/AutoExportVersion/AutoExportVersion.gd:73
+msgid ""
+"Version string is empty.\n"
+"Make sure your 'get_version()' in '{script_path}' is configured properly."
+msgstr ""
+
+#: addons/AutoExportVersion/AutoExportVersion.gd:74
+msgid "AutoExportVersion: Print and Update Current Version"
+msgstr ""

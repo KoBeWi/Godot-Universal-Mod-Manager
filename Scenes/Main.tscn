@@ -8,7 +8,7 @@
 script/source = "extends Label
 
 func _ready() -> void:
-	text += preload(\"res://version.gd\").VERSION
+	text += ProjectSettings.get_setting(\"application/config/version\")
 "
 
 [node name="Main" type="VBoxContainer" unique_id=1922640151]

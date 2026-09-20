@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Godot Universal Mod Manager"
+config/version="1.0"
 config/tags=PackedStringArray("tool")
 run/main_scene="res://Scenes/Main.tscn"
 config/features=PackedStringArray("4.8")
