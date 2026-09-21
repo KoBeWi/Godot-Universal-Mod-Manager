@@ -6,6 +6,10 @@ var directory_mode: int = -1
 var entry_to_delete: Control
 
 func _ready() -> void:
+	var versions: Array = str_to_var(FileAccess.get_file_as_string("res://System/Versions.dat"))
+	for dir in versions:
+		%CreateVersion.add_item(dir)
+	
 	for game in Registry.games:
 		add_game_entry(game)
 

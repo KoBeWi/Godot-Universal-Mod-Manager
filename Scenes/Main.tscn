@@ -78,13 +78,13 @@ size_flags_vertical = 3
 [node name="AddGame" type="AcceptDialog" parent="." unique_id=1983184801]
 unique_name_in_owner = true
 title = "Add Game Entry"
-size = Vector2i(616, 180)
+size = Vector2i(616, 185)
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="AddGame" unique_id=891772052]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 608.0
-offset_bottom = 131.0
+offset_bottom = 136.0
 
 [node name="VBoxContainer" type="GridContainer" parent="AddGame/VBoxContainer2" unique_id=769106290]
 custom_minimum_size = Vector2(600, 0)
@@ -165,14 +165,6 @@ text = "Godot Version"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
-selected = 2
-item_count = 3
-popup/item_0/text = "2.x"
-popup/item_0/id = 0
-popup/item_1/text = "3.x"
-popup/item_1/id = 1
-popup/item_2/text = "4.x"
-popup/item_2/id = 2
 
 [node name="Label3" type="Label" parent="CreateGame/VBoxContainer2/VBoxContainer" unique_id=366627216]
 layout_mode = 2
