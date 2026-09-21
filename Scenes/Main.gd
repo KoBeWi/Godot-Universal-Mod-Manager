@@ -73,6 +73,7 @@ func on_create_game_entry() -> void:
 	%CreateTitle.clear()
 	%CreateScene.clear()
 	%CreateDirectory.clear()
+	validate_create()
 	
 	$CreateGame.reset_size()
 	$CreateGame.popup_centered()
@@ -100,12 +101,18 @@ func validate_create() -> void:
 		set_create_error("Scene can't be empty.")
 		return
 	
-	if not %CreateScene.text.begins_with("res://") or not %CreateScene.text.get_extension() in ["tscn", "scn"]:
-		set_create_error("Scene path needs to point to a scn/tscn file inside res://.")
+	if %CreateScene.text.begins_with("uid://"):
+		pass
+	elif not %CreateScene.text.begins_with("res://") or not %CreateScene.text.get_extension() in ["tscn", "scn"]:
+		set_create_error("Scene path must be a UID, or point to a scn/tscn file inside res://.")
 		return
 	
 	if %CreateDirectory.text.is_empty():
 		set_create_error("Game directory name can't be empty.")
+		return
+	
+	if not DirAccess.dir_exists_absolute(%CreateDirectory.text):
+		set_create_error("The provided directory does not exist.")
 		return
 	
 	if DirAccess.get_files_at(%CreateDirectory.text).is_empty():

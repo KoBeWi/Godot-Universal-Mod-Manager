@@ -4,6 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://cgdl6ls80n328" path="res://Textures/Folder.svg" id="2_2k2ec"]
 [ext_resource type="Texture2D" uid="uid://csvx51bvvwu3p" path="res://Textures/Remove.svg" id="4_c2x44"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kln2b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i1q8h"]
+bg_color = Color(1, 1, 1, 0.0627451)
+
 [node name="GameEntry" type="PanelContainer" unique_id=1367515450]
 offset_right = 395.0
 offset_bottom = 96.0
@@ -58,7 +63,9 @@ layout_mode = 2
 
 [node name="Button" type="Button" parent="." unique_id=1985350512]
 layout_mode = 2
-flat = true
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kln2b")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_kln2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_i1q8h")
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=459503021]
 layout_mode = 2
