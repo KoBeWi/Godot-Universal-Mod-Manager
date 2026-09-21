@@ -46,14 +46,6 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 horizontal_alignment = 2
 
-[node name="VSeparator" type="VSeparator" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1275364867]
-layout_mode = 2
-
-[node name="Active" type="CheckButton" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1644242552]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Active"
-
 [node name="Description" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=995916403]
 unique_name_in_owner = true
 layout_mode = 2
@@ -61,23 +53,35 @@ size_flags_vertical = 3
 text = "Description"
 autowrap_mode = 2
 
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer" unique_id=1275364867]
+layout_mode = 2
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer" unique_id=739708027]
 layout_mode = 2
 alignment = 1
 
-[node name="OpenFolder" type="Button" parent="HBoxContainer/VBoxContainer2" unique_id=928178435]
+[node name="Active" type="CheckButton" parent="HBoxContainer/VBoxContainer2" unique_id=1644242552]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Active"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer2" unique_id=1284105704]
+layout_mode = 2
+alignment = 1
+
+[node name="OpenFolder" type="Button" parent="HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=928178435]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Open Folder"
 icon = ExtResource("2_oeaff")
 
-[node name="Edit" type="Button" parent="HBoxContainer/VBoxContainer2" unique_id=534784233]
+[node name="Edit" type="Button" parent="HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=534784233]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Edit"
 icon = ExtResource("3_ehfl0")
 
-[node name="Remove" type="Button" parent="HBoxContainer/VBoxContainer2" unique_id=1616176273]
+[node name="Remove" type="Button" parent="HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=1616176273]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Delete"
@@ -93,5 +97,5 @@ use_native_dialog = true
 
 [node name="AcceptDialog" type="AcceptDialog" parent="." unique_id=367073851]
 
-[connection signal="toggled" from="HBoxContainer/VBoxContainer/HBoxContainer/Active" to="." method="toggle_active"]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer2/Active" to="." method="toggle_active"]
 [connection signal="dir_selected" from="FileDialog" to="." method="try_recover"]
