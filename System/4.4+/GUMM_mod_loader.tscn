@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdmfy6r6ayvyf"]
+
+[sub_resource type="GDScript" id="1"]
+script/source = "extends Node
+
+var loaded_mods = []
+
+func _ready():
+	var mod_list = ProjectSettings.get_setting(\"gumm/mod_list\")
+	for mod in mod_list:
+		load_mod(mod)
+	
+	get_tree().set_meta(\"GUMM_mods\", loaded_mods)
+	get_tree().change_scene_to_file(ProjectSettings.get_setting(\"gumm/main_scene\"))
+
+func load_mod(mod_path: String):
+	var mod_cfg := ConfigFile.new()
+	mod_cfg.load(mod_path.path_join(\"mod.cfg\"))
+	print(\"Loading mod: \", mod_cfg.get_value(\"Godot Mod\", \"name\", \"[unknown]\"))
+	
+	var mod_ref: RefCounted = load(mod_path.path_join(\"mod.gd\")).new()
+	mod_ref.initialize(mod_path, get_tree())
+	loaded_mods.append(mod_ref)
+"
+
+[node name="GUMM" type="Node"]
+script = SubResource("1")

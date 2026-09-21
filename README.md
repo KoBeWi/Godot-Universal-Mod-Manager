@@ -82,7 +82,7 @@ Of note is the Path field, which needs to be pointing to an *empty* directory. T
 
 Once you create a new mod, it will contain 3 files: `mod.cfg` that describes your mod and `mod.gd` which is the script loaded by the game. There is also `GUMM_mod.gd`, which provides basic API for managing mod data. It should not be edited and your `mod.png` extends this file. The resources you want to add/replace should be contained within the mod directory; can be inside sub-folders.
 
-Note that these 3 files vary depending on Godot version. GUMM will automatically copy the files based on the Godot version specified in the game's entry. There are 3 supported versions: `2.x`, `3.x`, `4.x`. They API is designed to support all minor releases, so `3.x` can be used from `3.0` to `3.6` (which is e.g. why it doesn't use typing, which was added in `3.1`).
+Note that these 3 files vary depending on Godot version. GUMM will automatically copy the files based on the Godot version specified in the game's entry. There are 5 supported versions: `2.x`, `3.x`, `3.3+`, `4.x`, `4.4+`. They `x` API is designed to support all minor releases, so `3.x` can be used from `3.0` to `3.6` (which is e.g. why it doesn't use typing, which was added in `3.1`). The `+` API only supports releases from that version or higher, so `4.4+` supports `4.4`, `4.5` etc., but not `4.3`.
 
 ### Modding Basics
 
@@ -101,17 +101,12 @@ You can use the `scene_tree` argument to e.g. inject custom nodes into scene tre
 
 ### Feature Support and Method List
 
-|Feature|2.x|3.x|4.x|
-|---|---|---|---|
-|Load Textures|✔|✔|✔
-|Load OGG|✖|✔|✖
-|Load MP3|✖|✔¹|✔
-|Load WAV²|✖|✖|✖
-|Load GLTF²|✖|✖|✖
-
-¹Since 3.3
-
-²Might come in future versions
+|Feature|2.x|3.x|3.3+|4.x|4.4+|
+|---|---|---|---|---|---|
+|Load Textures|✅|✅|✅|✅|✅
+|Load OGG|❌|✅|✅|❌|✅
+|Load MP3|❌|❌|✅|✅|✅
+|Load WAV|❌|❌|❌|❌|✅
 
 Basic methods:
 - `replace_resource_at(path: String, resource: Resource)` - injects the provided resource into the specified path
@@ -122,6 +117,7 @@ Feature-dependent methods:
 - `load_texture(path: String, flags: int = 7)` [Load Textures] - loads a texture using Image class. Note that `flags` is removed in Godot 4.x
 - `load_ogg(path: String)` [Load OGG] - loads an OGG audio stream
 - `load_mp3(path: String)` [Load MP3] - loads a MP3 audio stream
+- `load_wav(path: String)` [Load WAV] - loads an OGG audio stream
 
 ### Modding API
 

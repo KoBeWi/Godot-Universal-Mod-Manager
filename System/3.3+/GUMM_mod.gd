@@ -34,6 +34,17 @@ func load_ogg(path):
 	
 	return stream
 
+func load_mp3(path):
+	var file = File.new()
+	file.open(get_full_path(path), File.READ)
+	
+	var data = file.get_buffer(file.get_len())
+	
+	var stream = AudioStreamMP3.new()
+	stream.data = data
+	
+	return stream
+
 func load_resource(path):
 	return load(get_full_path(path))
 
