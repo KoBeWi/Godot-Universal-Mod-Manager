@@ -1,61 +1,78 @@
 extends VBoxContainer
 
-enum {DIRECTORY_CREATE_GAME, DIRECTORY_ADD_GAME, DIRECTORY_ADD_DESCRIPTIOR}
-var directory_mode: int = -1
+enum { DIRECTORY_CREATE_GAME, DIRECTORY_ADD_GAME, DIRECTORY_ADD_DESCRIPTIOR }
 
+@onready var game_list: VBoxContainer = %GameList
+@onready var delete_confirm: ConfirmationDialog = %DeleteConfirm
+
+@onready var add_game_dialog: AcceptDialog = %AddGame
+@onready var import_path: HBoxContainer = %ImportPath
+@onready var import_game: HBoxContainer = %ImportGame
+@onready var copy_descriptor: CheckBox = %CopyLocal
+@onready var add_error: Label = %AddError
+
+@onready var create_game_dialog: AcceptDialog = %CreateGame
+@onready var create_title: LineEdit = %CreateTitle
+@onready var create_icon: HBoxContainer = %CreateIcon
+@onready var create_version: OptionButton = %CreateVersion
+@onready var create_scene: LineEdit = %CreateScene
+@onready var create_directory: HBoxContainer = %CreateDirectory
+@onready var create_error: Label = %CreateError
+
+var directory_mode: int = -1
 var entry_to_delete: Control
 
 func _ready() -> void:
 	var versions: Array = str_to_var(FileAccess.get_file_as_string("res://System/Versions.dat"))
 	for dir in versions:
-		%CreateVersion.add_item(dir)
+		create_version.add_item(dir)
 	
 	for game in Registry.games:
 		add_game_entry(game)
 
-func on_add_game_entry() -> void:
-	%ImportPath.clear()
-	%ImportGame.clear()
-	%CopyLocal.button_pressed = true
+func on_import_game_entry() -> void:
+	import_path.clear()
+	import_game.clear()
+	copy_descriptor.button_pressed = true
 	validate_add()
 	
-	$AddGame.reset_size()
-	$AddGame.popup_centered()
+	add_game_dialog.reset_size()
+	add_game_dialog.popup_centered()
 
 func validate_add() -> void:
-	if %ImportPath.text.is_empty():
+	if import_path.text.is_empty():
 		set_add_error("Descriptor path can't be empty.")
 		return
 	
-	if not FileAccess.file_exists(%ImportPath.text.path_join("game.cfg")):
+	if not FileAccess.file_exists(import_path.text.path_join("game.cfg")):
 		set_add_error("Descriptor directory invalid. Missing \"game.cfg\".")
 		return
 	
 	var data := GameDescriptor.new()
-	data.load_data(%ImportPath.text)
-	for game in %GameList.get_children():
+	data.load_data(import_path.text)
+	for game in game_list.get_children():
 		if game.entry.title == data.title:
 			set_add_error("Game already on the list. Delete it first.")
 			return
 	
-	if %ImportGame.text.is_empty():
+	if import_game.text.is_empty():
 		set_add_error("Game directory name can't be empty.")
 		return
 	
-	if DirAccess.get_files_at(%ImportGame.text).is_empty():
+	if DirAccess.get_files_at(import_game.text).is_empty():
 		set_add_error("The provided directory does not contain any files.")
 		return
 	
 	set_add_error("")
 
 func set_add_error(error: String):
-	%AddError.text = error
-	$AddGame.get_ok_button().disabled = not error.is_empty()
+	add_error.text = error
+	add_game_dialog.get_ok_button().disabled = not error.is_empty()
 
 func import_game_entry() -> void:
-	var entry_folder: String = %ImportPath.text.simplify_path()
+	var entry_folder: String = import_game.text.simplify_path()
 	
-	if %CopyLocal.button_pressed:
+	if copy_descriptor.button_pressed:
 		var entry := GameDescriptor.new()
 		entry.load_data(entry_folder)
 		
@@ -66,86 +83,86 @@ func import_game_entry() -> void:
 		
 		entry_folder = new_folder
 	
-	var entry_data := Registry.add_new_game_entry(entry_folder, %ImportGame.text.simplify_path())
+	var entry_data := Registry.add_new_game_entry(entry_folder, import_game.text.simplify_path())
 	add_game_entry(entry_data)
 
 func on_create_game_entry() -> void:
-	%CreateTitle.clear()
-	%CreateScene.clear()
-	%CreateDirectory.clear()
+	create_title.clear()
+	create_scene.clear()
+	create_directory.clear()
 	validate_create()
 	
-	$CreateGame.reset_size()
-	$CreateGame.popup_centered()
+	create_game_dialog.reset_size()
+	create_game_dialog.popup_centered()
 
 func validate_create() -> void:
-	if %CreateTitle.text.is_empty():
+	if create_title.text.is_empty():
 		set_create_error("Title can't be empty.")
 		return
 	
-	for game in %GameList.get_children():
-		if game.entry.title == %CreateTitle.text:
+	for game in game_list.get_children():
+		if game.entry.title == create_title.text:
 			set_create_error("Game already on the list.")
 			return
 	
-	if not %CreateIcon.text.is_empty():
-		if not %CreateIcon.text.get_extension() in Registry.ICON_FORMATS:
+	if not create_title.text.is_empty():
+		if not create_icon.text.get_extension() in Registry.ICON_FORMATS:
 			set_create_error("Icon format invalid. Supported extensions: %s" % ", ".join(Registry.ICON_FORMATS))
 			return
 		
-		if not FileAccess.file_exists(%CreateIcon.text):
+		if not FileAccess.file_exists(create_icon.text):
 			set_create_error("Icon file does not exist.")
 			return
 	
-	if %CreateScene.text.is_empty():
+	if create_scene.text.is_empty():
 		set_create_error("Scene can't be empty.")
 		return
 	
-	if %CreateScene.text.begins_with("uid://"):
+	if create_scene.text.begins_with("uid://"):
 		pass
-	elif not %CreateScene.text.begins_with("res://") or not %CreateScene.text.get_extension() in ["tscn", "scn"]:
+	elif not create_scene.text.begins_with("res://") or not create_scene.text.get_extension() in ["tscn", "scn"]:
 		set_create_error("Scene path must be a UID, or point to a scn/tscn file inside res://.")
 		return
 	
-	if %CreateDirectory.text.is_empty():
+	if create_directory.text.is_empty():
 		set_create_error("Game directory name can't be empty.")
 		return
 	
-	if not DirAccess.dir_exists_absolute(%CreateDirectory.text):
+	if not DirAccess.dir_exists_absolute(create_directory.text):
 		set_create_error("The provided directory does not exist.")
 		return
 	
-	if DirAccess.get_files_at(%CreateDirectory.text).is_empty():
+	if DirAccess.get_files_at(create_directory.text).is_empty():
 		set_create_error("The provided directory does not contain any files.")
 		return
 	
 	set_create_error("")
 
 func set_create_error(error: String):
-	%CreateError.text = error
-	$CreateGame.get_ok_button().disabled = not error.is_empty()
+	create_error.text = error
+	create_game_dialog.get_ok_button().disabled = not error.is_empty()
 
 func create_game_entry() -> void:
 	var entry := GameDescriptor.new()
-	entry.title = %CreateTitle.text
-	entry.godot_version = %CreateVersion.get_item_text(%CreateVersion.selected)
-	entry.main_scene = %CreateScene.text
+	entry.title = create_title.text
+	entry.godot_version = create_version.get_item_text(create_version.selected)
+	entry.main_scene = create_scene.text
 	
-	var entry_path: String = "user://Games/" + %CreateTitle.text.validate_filename()
+	var entry_path: String = "user://Games/" + create_title.text.validate_filename()
 	DirAccess.make_dir_recursive_absolute(entry_path)
 	entry.save_data(entry_path)
 	
-	if not %CreateIcon.text.is_empty():
-		var image := Image.load_from_file(%CreateIcon.text)
+	if not create_icon.text.is_empty():
+		var image := Image.load_from_file(create_icon.text)
 		Registry.smart_resize_to_80(image)
 		image.save_png(entry_path.path_join("icon.png"))
 	
-	var entry_data := Registry.add_new_game_entry(entry_path, %CreateDirectory.text.simplify_path())
+	var entry_data := Registry.add_new_game_entry(entry_path, create_directory.text.simplify_path())
 	add_game_entry(entry_data)
 
 func add_game_entry(game: Registry.GameData) -> Control:
 	var entry = preload("res://Nodes/GameEntry.tscn").instantiate()
-	%GameList.add_child(entry)
+	game_list.add_child(entry)
 	entry.owner = self
 	entry.set_game(game)
 	if not entry.missing:
@@ -176,6 +193,6 @@ func remove_game(entry, confirmed := false):
 		entry.queue_free()
 	else:
 		entry_to_delete = entry
-		$DeleteConfirm.dialog_text = "Delete game \"%s\"?" % entry.entry.title
-		$DeleteConfirm.reset_size()
-		$DeleteConfirm.popup_centered()
+		delete_confirm.dialog_text = "Delete game \"%s\"?" % entry.entry.title
+		delete_confirm.reset_size()
+		delete_confirm.popup_centered()

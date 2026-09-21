@@ -119,12 +119,14 @@ text = "Copy Descriptor?"
 
 [node name="AddError" type="Label" parent="AddGame/VBoxContainer2" unique_id=182760093]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="CreateGame" type="AcceptDialog" parent="." unique_id=551417591]
+unique_name_in_owner = true
 title = "Create Game Entry"
 size = Vector2i(616, 357)
 
@@ -185,14 +187,16 @@ layout_mode = 2
 
 [node name="CreateError" type="Label" parent="CreateGame/VBoxContainer2" unique_id=1836954532]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="DeleteConfirm" type="ConfirmationDialog" parent="." unique_id=774866889]
+unique_name_in_owner = true
 
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="on_add_game_entry"]
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="on_import_game_entry"]
 [connection signal="pressed" from="VBoxContainer/Button2" to="." method="on_create_game_entry"]
 [connection signal="confirmed" from="AddGame" to="." method="import_game_entry"]
 [connection signal="text_changed" from="AddGame/VBoxContainer2/VBoxContainer/ImportPath" to="." method="validate_add"]
