@@ -200,16 +200,16 @@ func toggle_mods(button_pressed: bool) -> void:
 			
 			if has == config_sections.size():
 				match game_data.godot_version:
-						"2.x", "3.x", "4.x":
-							if config.get_section_keys("application").size() == 1:
-								DirAccess.remove_absolute(override_file)
-								deleted = true
+					_:
+						if config.get_section_keys("application").size() == 1:
+							DirAccess.remove_absolute(override_file)
+							deleted = true
 		
 		if not deleted:
 			match game_data.godot_version:
 				"2.x":
 					config.erase_section_key("application", "main_scene")
-				"3.x", "4.x":
+				_:
 					config.erase_section_key("application", "run/main_scene")
 			
 			if config.has_section("gumm"):
@@ -227,7 +227,7 @@ func apply_mods():
 	match game_data.godot_version:
 		"2.x":
 			config.set_value("application", "main_scene", "res://GUMM_mod_loader.tscn")
-		"3.x", "4.x":
+		_:
 			config.set_value("application", "run/main_scene", "res://GUMM_mod_loader.tscn")
 	
 	DirAccess.copy_absolute("res://System/%s/GUMM_mod_loader.tscn" % game_data.godot_version, game_metadata.game_path.path_join("GUMM_mod_loader.tscn"))
