@@ -18,13 +18,13 @@ func load_texture(path: String) -> Texture2D:
 	return ImageTexture.create_from_image(Image.load_from_file(get_full_path(path)))
 
 func load_mp3(path: String) -> AudioStreamMP3:
-	return AudioStreamMP3.load_from_file(path)
+	return AudioStreamMP3.load_from_file(get_full_path(path))
 
-func load_ogg(path: String) -> AudioStreamOggVorbis:#4.2
-	return AudioStreamOggVorbis.load_from_file(path)
+func load_ogg(path: String) -> AudioStreamOggVorbis:
+	return AudioStreamOggVorbis.load_from_file(get_full_path(path))
 
-func load_wav(path: String) -> AudioStreamWAV:#4.4
-	return AudioStreamWAV.load_from_file(path)
+func load_wav(path: String) -> AudioStreamWAV:
+	return AudioStreamWAV.load_from_file(get_full_path(path))
 
 func load_resource(path: String) -> Resource:
 	return load(get_full_path(path))
